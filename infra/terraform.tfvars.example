@@ -1,0 +1,7 @@
+# copy to terraform.tfvars and fill in. terraform.tfvars is git-ignored.
+tenancy_ocid     = "ocid1.tenancy.oc1..aaaa..."
+user_ocid        = "ocid1.user.oc1..aaaa..."
+fingerprint      = "aa:bb:cc:..."
+private_key_path = "C:/Users/YOU/.oci/oci_api_key.pem"
+region           = "us-ashburn-1"
+ssh_public_key   = "ssh-ed25519 AAAA... you@laptop"

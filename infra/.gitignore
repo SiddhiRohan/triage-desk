@@ -1,0 +1,7 @@
+# state and secrets never go in git
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+terraform.tfvars
+*.pem
