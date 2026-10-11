@@ -1,0 +1,2 @@
+# copy to terraform.tfvars. aws keys go in env vars, NOT here.
+ssh_public_key = "ssh-ed25519 AAAA... you@laptop"
