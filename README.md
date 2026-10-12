@@ -8,10 +8,12 @@ To deploy the Triage Desk application to a Linux server:
     python3 -m venv .venv
     ./.venv/bin/pip install fastapi uvicorn httpx pytest
     ```
-3.  **Configure Secrets**: Create a file at `/home/ubuntu/triage-desk/.env` with the following content:
+3.  **Configure Environment Variables**: Create a file at `/home/ubuntu/triage-desk/.env` with the following content:
     ```
-    OLLAMA_API_KEY=your_actual_api_key_here
+    TRIAGE_API_URL=https://ollama.com/v1/chat/completions
+    TRIAGE_API_KEY=your_actual_api_key_here
     ```
+    The classifier will use `TRIAGE_API_KEY` for authentication, falling back to `OLLAMA_API_KEY` if set. The `TRIAGE_API_URL` defaults to the Ollama OpenAI-compatible endpoint.
 4.  **Run the deployment script**:
     ```bash
     sudo ./scripts/deploy.sh
