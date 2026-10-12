@@ -12,24 +12,33 @@ page on top, Caddy in front, on an AWS VM that Terraform built.
 
 The agents wrote the code. I wrote the plan (`docs/PLAN.md`) and the role files (`agents/`),
 ran the loop, filed the bugs I found when I started the service, rejected pull requests when the
-reviewer let something through, and merged. Thirteen tickets, thirteen PRs, every commit on
-`main` authored by an agent. `git log --format='%an %s'` shows it.
+reviewer let something through, and merged. Fourteen tickets, fourteen PRs. Every commit under
+`app/`, `scripts/`, `tests/`, `data/` and `deployment/` is authored by an agent; mine are the
+merge commits and the files under `agents/`, `docs/`, `infra/`, `logs/` and `tools/`.
+`git log --format='%an %s'` shows it.
 
 ## 1. Roster
 
-| Agent | Runtime | Job | Model (tickets 1 to 11) | Model (from ticket 11) |
-|---|---|---|---|---|
-| orchestrator | Hermes Agent profile | turns PLAN.md into GitHub issues, assigns, routes rejections back to the builder | gpt-oss:120b, Ollama Cloud | nemotron-3-super-120b, NVIDIA |
-| builder-core | OpenClaw agent | backend, data model, feed, classifier, deploy files | gemma4:31b, Ollama Cloud | nemotron-3-super-120b, NVIDIA |
-| builder-ui | OpenClaw agent | the board page and its JS | gemma4:31b, Ollama Cloud | nemotron-3-super-120b, NVIDIA |
-| reviewer | Hermes Agent profile | reviews every PR against its issue and the hard rules, approves or rejects | nemotron-3-super, Ollama Cloud | nemotron-3-super-120b, NVIDIA |
-| tester | OpenClaw agent | the hard-rules test suite | gpt-oss:20b then gpt-oss:120b, Ollama Cloud | nemotron-3-super-120b, NVIDIA |
+| Agent | Runtime | Job | Model (tickets 1 to 11) | Model (from ticket 11) | Tools |
+|---|---|---|---|---|---|
+| orchestrator | Hermes Agent profile | turns PLAN.md into GitHub issues, assigns, routes rejections back to the builder | gpt-oss:120b, Ollama Cloud | nemotron-3-super-120b, NVIDIA | Hermes `terminal` and `file`; `gh` through the terminal; starts OpenClaw agents with `openclaw agent` |
+| builder-core | OpenClaw agent | backend, data model, feed, classifier, deploy files | gemma4:31b, Ollama Cloud | nemotron-3-super-120b, NVIDIA | OpenClaw stock shell and file tools; `git`, `gh`, pytest in its own venv |
+| builder-ui | OpenClaw agent | the board page and its JS | gemma4:31b, Ollama Cloud | nemotron-3-super-120b, NVIDIA | same as builder-core |
+| reviewer | Hermes Agent profile | reviews every PR against its issue and the hard rules, approves or rejects | nemotron-3-super, Ollama Cloud | nemotron-3-super-120b, NVIDIA | Hermes `terminal` and `file`; `gh pr diff`, `gh pr comment`, pytest |
+| tester | OpenClaw agent | the hard-rules test suite | gpt-oss:20b then gpt-oss:120b, Ollama Cloud | nemotron-3-super-120b, NVIDIA | same as builder-core |
 
+No custom skills on either runtime; the role files (`agents/<name>.md`) are the whole prompt.
 Each OpenClaw agent has its own workspace, its own clone of the repo, its own git identity
 (`builder-core (OpenClaw) <builder-core@triage-desk.agents>`) and its own venv. The Hermes
 profiles run in my clone and never commit. Every model was a free tier; the provider changed
-twice when free quotas ran out, which is section 4. Details in `agents/README.md` and
-`docs/PROVIDERS.md`.
+twice when free quotas ran out, which is section 4. Runtime configs with secrets removed are in
+`agents/config/`; details in `agents/README.md` and `docs/PROVIDERS.md`.
+
+Why these models: the plan said strong for planning and review, cheaper for routine coding.
+gpt-oss:120b for the orchestrator and nemotron-3-super for the reviewer were the two largest
+models on Ollama's free list; gemma4:31b for the builders was the smallest one that handled
+multi-file edits in a quick trial. The tester started on gpt-oss:20b to see if the cheapest
+model could write tests from a spec; it could not (section 3), and moved up.
 
 ## 2. How a ticket moves
 
@@ -83,6 +92,9 @@ the ones I filed.
 | T11 schema never created | #27 | #28 | builder-core | 3 | found at deploy on a wiped DB: nobody called `init_db()`; worked until then only because an old test run had created the tables. Ollama's cap hit mid-review; finished on OpenRouter |
 | T12 classifier endpoint by env | #29 | #30 | builder-core | 1 | needed to move the classifier off Ollama. OpenRouter's cap hit mid-review; finished on NVIDIA |
 | T13 board.js not served | #31 | #32 | builder-ui | 1 | found in the browser: `/static/board.js` 404, page stuck on "Loading config..." |
+| T14 model null on rules fallback | #33 | #34 | builder-core | 1 | Monday, on NVIDIA: three minutes from assign to approved. The builder committed on a leftover branch from T12 instead of a fresh one; diff was clean, rule added |
+
+Open on purpose: #35 (T15, a one-line default in `classify.py`), kept for the follow-up call.
 
 Per role:
 
@@ -217,14 +229,62 @@ Per model, as the providers count them:
 
 Cost: $0. No paid key, no credits, no card on any provider.
 
-The classifier itself: 30 messages, 26 routed by the model, 4 by the rules fallback. The four are
-the deliberately vague ones in the feed ("Uh...", "Hello", "Wait", "Maybe?"); the model did not
-return usable JSON for them, the fallback scored them 0.2 to 0.4, and the 0.70 threshold put them
-in Needs human. PLAN.md predicted 4 to 8 of 30 at that threshold. I did not change it.
+**Where the tokens went, by phase.** Neither runtime tags a session by phase, so this split is
+an estimate from the round counts in section 3 (which runs were first attempts and which were
+re-runs after a rejection), applied to the context-processed totals above.
+
+| Phase | What it covers | Tokens (context processed) | Share |
+|---|---|---|---|
+| Planning | orchestrator turning PLAN.md into issues, deduping, fixing bodies (`logs/01` to `03`) | ~0.4M | 1% |
+| Coding, first attempts | builders' and tester's first pass on each ticket, plus the orchestrator's assign-and-wait sessions | ~27M | 50% |
+| Review and test | the reviewer's first review of each PR | ~3.3M | 6% |
+| Retries | every fix round: builder re-runs after a rejection, re-reviews, the orchestrator routing rejections | ~23M | 43% |
+
+In plain words: half the tokens were agents doing tickets the first time, and almost as many
+were spent doing them again. The tester's one ticket cost more in retries (~7.5M) than all the
+planning and first-pass reviewing combined. Most of the retry cost is not the extra model calls
+themselves but the OpenClaw sessions growing all day, so every re-run re-read everything before
+it (section 5, item 1). The reviewer's million input tokens are spread evenly between first
+reviews and re-reviews, about 30 runs at 30k each.
+
+**The threshold.** `CONFIDENCE_THRESHOLD` is 0.70, set in the systemd unit, shown on the board.
+PLAN.md chose it before any code existed, with this reasoning: the feed has four deliberately
+vague messages out of thirty, so a sensible cut should send roughly four to eight items to a
+person; zero means the router is overconfident, twenty means it is useless. The result: 30
+messages, 26 routed by the model with confidence 0.90 to 0.99, 4 by the rules fallback. The four
+are exactly the vague ones ("Uh...", "Hello", "Wait", "Maybe?"); the model did not return usable
+JSON for them, the fallback scored them 0.20 to 0.40, and the threshold put them in Needs human.
+That is the bottom of the predicted band, so I left it. On a real feed I would expect the model's
+own confidence to spread more than it does here (every model answer was 0.90 or above, which
+says more about the model than the messages), and the threshold would need tuning against a
+labelled sample rather than a guess.
 
 ## 7. Trace excerpts
 
 All from `logs/` and the PR comment threads. Full files are in the repo.
+
+A handoff, orchestrator to builder to reviewer, ticket 10 (`logs/ticket-25-1-assign.log`, the
+issue comment, the PR body):
+
+```
+[orchestrator] Issue #25 has been updated and assigned:
+- Removed label ready, added in-progress.
+- Comment posted: "Assigning this issue to @builder-core. Moving to in-progress."
+The builder was started with the provided command. It completed the ticket, created branch
+ticket/25-fix-run-feed-inserts, pushed it, and opened PR #26.
+
+[issue #25, comment]  Assigning this issue to @builder-core. Moving to in-progress.
+
+[PR #26, body]  Agent: builder-core / Runtime: OpenClaw / Model: ollama-cloud/gemma4:31b
+                Closes #25
+                What I did:
+                - Updated scripts/run_feed.py to insert every message from the feed into the
+                  'messages' table using 'INSERT OR IGNORE' before proceeding to classification.
+                ...
+                - Added a test in tests/test_run_feed.py that verifies the full flow
+
+[reviewer, logs/ticket-25-review-1.log]  All checks pass. LGTM. Label updated: approved
+```
 
 The reviewer, on re-review of the first PR after I added the generated-files rule
 (`logs/06-reviewer-rereviews-PR15.log`):
