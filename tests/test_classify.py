@@ -1,4 +1,5 @@
 import pytest
+import os
 from unittest.mock import patch, MagicMock
 from app.classify import classify_message, call_llm
 import json
@@ -74,3 +75,22 @@ def test_classify_fallback_on_double_parse_failure(mock_db):
         # Should fall back to rules.py (other category)
         assert res["category"] == "other"
         assert res["confidence"] <= 0.5
+
+
+@patch("httpx.Client.post")
+def test_classify_uses_custom_endpoint(mock_post):
+    # Set env var for custom URL
+    os.environ["TRIAGE_API_URL"] = "https://custom.example.com/v1/chat/completions"
+    # Also need to set API key to avoid errors; we can set dummy
+    os.environ["TRIAGE_API_KEY"] = "dummy"
+    # Mock DB connection
+    with patch("app.classify.get_db_connection") as mock_db:
+        mock_conn = MagicMock()
+        mock_db.return_value.__enter__.return_value = mock_conn
+        mock_post.return_value = MagicMock(status_code=200, json=lambda: {"choices": [{"message": {"content": '{"category":"support","priority":"normal","confidence":0.9,"reason":"test"}'}}]}, raise_for_status=lambda: None)
+        res = classify_message("msg-test", "Test", "Body")
+        # Verify that the post was called with the custom URL
+        args, kwargs = mock_post.call_args
+        assert args[0] == "https://custom.example.com/v1/chat/completions"
+        # Also verify that we got a successful classification
+        assert res["category"] == "support"

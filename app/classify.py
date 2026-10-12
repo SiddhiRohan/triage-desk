@@ -6,10 +6,8 @@ from app.db import get_db_connection
 from app.rules import rule_based_classify
 
 # Configuration from environment variables
-OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "dummy_key")
 TRIAGE_MODEL = os.getenv("TRIAGE_MODEL", "gpt-4o")
 CONFIDENCE_THRESHOLD = float(os.getenv("CONFIDENCE_THRESHOLD", "0.70"))
-OLLAMA_URL = "https://ollama.com/v1/chat/completions"
 
 def build_prompt(message_text: str):
     return (
@@ -24,8 +22,12 @@ def call_llm(prompt: str, retry_error: str = None):
     if retry_error:
         full_prompt += f"\n\nYour previous response was invalid: {retry_error}. Please try again and return valid JSON."
 
+    # Read env vars per call to allow runtime changes
+    api_key = os.getenv("TRIAGE_API_KEY", os.getenv("OLLAMA_API_KEY", ""))
+    api_url = os.getenv("TRIAGE_API_URL", "https://ollama.com/v1/chat/completions")
+
     headers = {
-        "Authorization": f"Bearer {OLLAMA_API_KEY}",
+        "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json"
     }
     
@@ -37,7 +39,7 @@ def call_llm(prompt: str, retry_error: str = None):
 
     # Use a short timeout to avoid hanging
     with httpx.Client(timeout=10.0) as client:
-        response = client.post(OLLAMA_URL, headers=headers, json=payload)
+        response = client.post(api_url, headers=headers, json=payload)
         response.raise_for_status()
         result = response.json()
         content = result["choices"][0]["message"]["content"]
