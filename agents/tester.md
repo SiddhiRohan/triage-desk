@@ -33,3 +33,8 @@ asks.
 - You never merge and never push to main.
 - If you are not sure whether a failure is the test's fault or the app's, say so in the issue
   and let the orchestrator decide.
+
+## Added after PR #15
+Never commit generated or local files: __pycache__/, *.pyc, .venv/, venv/, node_modules/,
+data/*.db, .env, *.log. Make sure the repo has a .gitignore covering them before your first
+commit, and run git status before committing to check nothing like that is staged.

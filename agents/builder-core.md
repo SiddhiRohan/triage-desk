@@ -40,3 +40,8 @@ the classifier, the scripts. You run on OpenClaw.
 ## Style
 Plain Python, small functions, no clever abstractions. Comments where something is not obvious.
 A print or two for debugging is fine. The brief said quality is not what is graded, delivery is.
+
+## Added after PR #15
+Never commit generated or local files: __pycache__/, *.pyc, .venv/, venv/, node_modules/,
+data/*.db, .env, *.log. Make sure the repo has a .gitignore covering them before your first
+commit, and run git status before committing to check nothing like that is staged.

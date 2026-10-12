@@ -28,3 +28,8 @@ Git identity: `git config user.name "builder-ui (OpenClaw)"` and `git config use
 
 ## Style
 It can be plain. Readable beats pretty. The brief said they do not care how it looks.
+
+## Added after PR #15
+Never commit generated or local files: __pycache__/, *.pyc, .venv/, venv/, node_modules/,
+data/*.db, .env, *.log. Make sure the repo has a .gitignore covering them before your first
+commit, and run git status before committing to check nothing like that is staged.
