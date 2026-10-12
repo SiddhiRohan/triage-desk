@@ -47,3 +47,7 @@ as the source of truth for what the PR changes. Never judge from a local checkou
 stale. Scope is defined by the issue's "Files touched" list: anything on that list is in scope.
 Files the reviewer itself asked for (such as .gitignore), and package markers like __init__.py
 inside a listed directory, count as in scope when the PR declares them.
+Tests must never read or write the real data/triage.db, and must not create files inside the
+repo: they use pytest tmp_path through a fixture. A test that DELETEs rows to clean up is a
+rejection. Run pytest twice; a test that only passes once is a rejection. app/db.py must read
+the DB path from the env var at connection time.
