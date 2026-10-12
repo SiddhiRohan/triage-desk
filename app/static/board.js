@@ -1,10 +1,12 @@
+let configData = null;
+let messagesCount = 0;
+
 async function loadConfig() {
     try {
         const res = await fetch('/api/config');
-        const data = await res.json();
-        document.getElementById('config').textContent = `Model: ${data.model_name} | Threshold: ${data.confidence_threshold}`;
+        configData = await res.json();
     } catch (e) {
-        document.getElementById('config').textContent = 'Error loading config';
+        console.error('Error loading config:', e);
     }
 }
 
@@ -12,6 +14,7 @@ async function loadMessages() {
     try {
         const res = await fetch('/api/messages');
         const messages = await res.json();
+        messagesCount = messages.length;
         
         const queues = {
             'Support': document.querySelector('[data-queue="Support"] .cards'),
@@ -47,6 +50,15 @@ async function loadMessages() {
         });
     } catch (e) {
         console.error('Error loading messages:', e);
+    }
+}
+
+async function updateHeader() {
+    const header = document.getElementById('config');
+    if (configData) {
+        header.textContent = `Model: ${configData.model_name} | Threshold: ${configData.confidence_threshold} | Total messages: ${messagesCount}`;
+    } else {
+        header.textContent = 'Loading config...';
     }
 }
 
@@ -96,7 +108,8 @@ document.getElementById('panel-close').onclick = () => {
     document.getElementById('panel').classList.remove('open');
 };
 
-window.onload = () => {
-    loadConfig();
-    loadMessages();
+window.onload = async () => {
+    await loadConfig();
+    await loadMessages();
+    updateHeader();
 };
