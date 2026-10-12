@@ -2,6 +2,7 @@ import pytest
 import os
 from unittest.mock import patch, MagicMock
 from app.classify import classify_message, call_llm
+from app.db import get_db_connection
 import json
 import httpx
 
@@ -94,3 +95,40 @@ def test_classify_uses_custom_endpoint(mock_post):
         assert args[0] == "https://custom.example.com/v1/chat/completions"
         # Also verify that we got a successful classification
         assert res["category"] == "support"
+
+
+def test_classify_llm_source_sets_model():
+    # Mock LLM response
+    mock_response = {
+        "choices": [{
+            "message": {
+                "content": json.dumps({
+                    "category": "support",
+                    "priority": "normal",
+                    "confidence": 0.9,
+                    "reason": "test reason"
+                })
+            }
+        }]
+    }
+    
+    with patch("httpx.Client.post", return_value=MagicMock(status_code=200, json=lambda: mock_response, raise_for_status=lambda: None)):
+        classify_message("msg-llm", "Help", "I need help")
+        # When source is llm, model should be the configured model name
+        with get_db_connection() as conn:
+            row = conn.execute("SELECT source, model FROM decisions WHERE message_id = ?", ("msg-llm",)).fetchone()
+            assert row is not None
+            assert row["source"] == "llm"
+            assert row["model"] == "gpt-4o"  # default model
+
+
+def test_classify_rules_source_sets_model_null():
+    # Force fallback by simulating network error
+    with patch("httpx.Client.post", side_effect=httpx.RequestError("Connection failed")):
+        classify_message("msg-rules", "Crash", "It crashed")
+        # When source is rules, model should be NULL
+        with get_db_connection() as conn:
+            row = conn.execute("SELECT source, model FROM decisions WHERE message_id = ?", ("msg-rules",)).fetchone()
+            assert row is not None
+            assert row["source"] == "rules"
+            assert row["model"] is None
