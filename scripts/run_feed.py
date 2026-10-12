@@ -4,8 +4,13 @@ from app.db import get_db_connection
 from app.classify import classify_message
 
 def run_feed():
+    # Initialize the database schema before touching any table
+    from app.db import init_db
+    init_db()
+
     feed_path = "data/feed.json"
     if not os.path.exists(feed_path):
+
         print(f"Feed file not found at {feed_path}")
         return
 
