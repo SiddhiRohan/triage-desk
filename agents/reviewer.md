@@ -40,3 +40,8 @@ The first PR shipped __pycache__/*.pyc files and I approved it. Add to the check
    - Does the diff add any generated or local-only files: __pycache__/, *.pyc, .venv/, venv/,
      node_modules/, data/*.db, .env, *.log? Any of these is a rejection: ask the builder to
      remove them from the branch and add them to .gitignore.
+
+## Also added after PR #15
+Before every review: run git fetch origin, and use gh pr diff <n> and gh pr diff <n> --name-only
+as the source of truth for what the PR changes. Never judge from a local checkout that might be
+stale. Scope is defined by the issue's "Files touched" list: anything on that list is in scope.
