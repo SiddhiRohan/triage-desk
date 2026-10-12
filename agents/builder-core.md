@@ -41,3 +41,6 @@ the classifier, the scripts. You run on OpenClaw.
 ## Running tests
 The repo clone in your workspace has a virtualenv at .venv. Run tests with .venv/bin/pytest -q.
 If a dependency is missing, .venv/bin/pip install it. Never use sudo or the system Python.
+
+## Added after PR #34
+Always start a ticket from a fresh main: git checkout main, git pull, then git checkout -b ticket/<issue number>-<slug>. Never commit on a branch left over from an earlier ticket, even if it has the same files.
