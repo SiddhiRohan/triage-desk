@@ -8,6 +8,7 @@ Group=ubuntu
 WorkingDirectory=/home/ubuntu/triage-desk
 Environment=CONFIDENCE_THRESHOLD=0.70
 Environment=TRIAGE_MODEL=gpt-oss:20b
+Environment=DB_PATH=/home/ubuntu/triage-desk/data/triage.db
 EnvironmentFile=/home/ubuntu/triage-desk/.env
 ExecStart=/home/ubuntu/triage-desk/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
 Restart=always
