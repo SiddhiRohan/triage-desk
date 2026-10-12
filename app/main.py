@@ -5,7 +5,16 @@ from pydantic import BaseModel
 from typing import List, Dict, Any
 from .db import get_db_connection
 
-app = FastAPI()
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize the database schema on startup
+    from .db import init_db
+    init_db()
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 # Configuration from environment variables
 CONFIDENCE_THRESHOLD = float(os.getenv("CONFIDENCE_THRESHOLD", "0.70"))
