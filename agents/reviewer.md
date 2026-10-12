@@ -45,3 +45,5 @@ The first PR shipped __pycache__/*.pyc files and I approved it. Add to the check
 Before every review: run git fetch origin, and use gh pr diff <n> and gh pr diff <n> --name-only
 as the source of truth for what the PR changes. Never judge from a local checkout that might be
 stale. Scope is defined by the issue's "Files touched" list: anything on that list is in scope.
+Files the reviewer itself asked for (such as .gitignore), and package markers like __init__.py
+inside a listed directory, count as in scope when the PR declares them.
