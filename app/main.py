@@ -1,6 +1,9 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
+from typing import List, Dict, Any
+from .db import get_db_connection
 
 app = FastAPI()
 
@@ -19,6 +22,42 @@ async def get_config():
         "model_name": TRIAGE_MODEL
     }
 
+@app.get("/api/messages")
+async def get_messages():
+    with get_db_connection() as conn:
+        cursor = conn.execute("""
+            SELECT m.id, m.subject, d.category, d.priority, d.confidence, d.queue
+            FROM messages m
+            JOIN decisions d ON m.id = d.message_id
+        """)
+        return [dict(row) for row in cursor.fetchall()]
+
+@app.get("/api/messages/{message_id}")
+async def get_message_detail(message_id: str):
+    with get_db_connection() as conn:
+        # Message and decision
+        row = conn.execute("""
+            SELECT m.*, d.category, d.priority, d.confidence, d.reason, d.source, d.model, d.decided_at, d.queue
+            FROM messages m
+            JOIN decisions d ON m.id = d.message_id
+            WHERE m.id = ?
+        """, (message_id,)).fetchone()
+        
+        if not row:
+            raise HTTPException(status_code=404, detail="Message not found")
+        
+        # Audit trail
+        audit_rows = conn.execute("""
+            SELECT id, action, detail, at 
+            FROM audit 
+            WHERE message_id = ? 
+            ORDER BY at ASC
+        """, (message_id,)).fetchall()
+        
+        res = dict(row)
+        res["audit"] = [dict(a) for a in audit_rows]
+        return res
+
 @app.get("/")
 async def root():
-    return {"message": "Triage Desk API is running"}
+    return FileResponse("app/static/board.html")
