@@ -26,6 +26,10 @@ def test_api_messages_list():
 def test_api_message_detail():
     res = client.get("/api/messages/nonexistent")
     assert res.status_code == 404
+    try:
+        res.json()
+    except Exception:
+        pass
 
 def test_root_serves_html():
     res = client.get("/")
