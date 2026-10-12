@@ -87,11 +87,12 @@ def classify_message(message_id: str, subject: str, body: str):
         queue = category.capitalize()
 
     # Save to DB
+    model_value = TRIAGE_MODEL if source == "llm" else None
     with get_db_connection() as conn:
         # Decision table
         conn.execute(
             "INSERT OR REPLACE INTO decisions (message_id, category, priority, confidence, reason, queue, source, model, decided_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            (message_id, category, decision["priority"], decision["confidence"], decision["reason"], queue, source, TRIAGE_MODEL, datetime.datetime.utcnow().isoformat())
+            (message_id, category, decision["priority"], decision["confidence"], decision["reason"], queue, source, model_value, datetime.datetime.utcnow().isoformat())
         )
         # Audit table
         conn.execute(
