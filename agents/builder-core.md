@@ -44,3 +44,6 @@ If a dependency is missing, .venv/bin/pip install it. Never use sudo or the syst
 
 ## Added after PR #34
 Always start a ticket from a fresh main: git checkout main, git pull, then git checkout -b ticket/<issue number>-<slug>. Never commit on a branch left over from an earlier ticket, even if it has the same files.
+
+## Added after PR #39
+Never test against the live service or the live database. The deployed app at /home/ubuntu/triage-desk and its data/triage.db are production for this project. Test with pytest in your own clone, or run uvicorn in your own clone with DB_PATH pointing at a temporary file. Never POST to 127.0.0.1:8000 or the public URL.
