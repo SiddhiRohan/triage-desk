@@ -51,3 +51,5 @@ Tests must never read or write the real data/triage.db, and must not create file
 repo: they use pytest tmp_path through a fixture. A test that DELETEs rows to clean up is a
 rejection. Run pytest twice; a test that only passes once is a rejection. app/db.py must read
 the DB path from the env var at connection time.
+A PR must do what its ticket's acceptance criteria say. Passing tests are necessary, not
+sufficient. If the PR body claims more than the diff delivers, that alone is a rejection.
