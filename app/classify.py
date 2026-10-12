@@ -88,17 +88,28 @@ def classify_message(message_id: str, subject: str, body: str):
 
     # Save to DB
     model_value = TRIAGE_MODEL if source == "llm" else None
+    decided_at = datetime.datetime.utcnow().isoformat()
     with get_db_connection() as conn:
         # Decision table
         conn.execute(
             "INSERT OR REPLACE INTO decisions (message_id, category, priority, confidence, reason, queue, source, model, decided_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            (message_id, category, decision["priority"], decision["confidence"], decision["reason"], queue, source, model_value, datetime.datetime.utcnow().isoformat())
+            (message_id, category, decision["priority"], decision["confidence"], decision["reason"], queue, source, model_value, decided_at)
         )
         # Audit table
         conn.execute(
             "INSERT INTO audit (message_id, action, detail, at) VALUES (?, ?, ?, ?)",
-            (message_id, "classify", f"Routed to {queue} via {source}", datetime.datetime.utcnow().isoformat())
+            (message_id, "classify", f"Routed to {queue} via {source}", decided_at)
         )
         conn.commit()
 
-    return decision
+    # Return the full decision dict (including queue, source, model, decided_at)
+    return {
+        "category": decision["category"],
+        "priority": decision["priority"],
+        "confidence": decision["confidence"],
+        "reason": decision["reason"],
+        "queue": queue,
+        "source": source,
+        "model": model_value,
+        "decided_at": decided_at
+    }

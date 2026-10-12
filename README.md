@@ -25,3 +25,46 @@ To deploy the Triage Desk application to a Linux server:
     - Configure Caddy to route traffic from port 80 to the app on port 8000.
 
 5.  **Configuration**: Other environment variables are set in the systemd unit files.
+
+## Live Intake Endpoint
+
+The application provides a POST endpoint to submit a live message for triage.
+
+**Endpoint**: `POST /api/intake`
+
+**Request Body**:
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "sender_name": "string"
+}
+```
+
+**Response** (HTTP 201):
+```json
+{
+  "id": "message-id",
+  "category": "category",
+  "priority": "priority",
+  "confidence": 0.0-1.0,
+  "reason": "reason",
+  "queue": "queue",
+  "source": "llm or rules",
+  "model": "model-name or null",
+  "decided_at": "timestamp"
+}
+```
+
+**Example**:
+```bash
+curl -X POST http://localhost:8000/api/intake \
+  -H "Content-Type: application/json" \
+  -d '{
+    "subject": "Help with login",
+    "body": "I cannot log into my account.",
+    "sender_name": "John Doe"
+  }'
+```
+
+The message will be stored, classified, and appear on the board in the appropriate queue.
