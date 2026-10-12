@@ -16,3 +16,13 @@ def test_get_config():
     assert "model_name" in data
     assert isinstance(data["confidence_threshold"], float)
     assert isinstance(data["model_name"], str)
+
+def test_static_board_js():
+    response = client.get("/static/board.js")
+    assert response.status_code == 200
+    assert len(response.content) > 0
+
+def test_root_contains_board_js():
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "board.js" in response.text

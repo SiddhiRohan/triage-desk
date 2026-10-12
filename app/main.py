@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Dict, Any
 from .db import get_db_connection
@@ -70,3 +71,6 @@ async def get_message_detail(message_id: str):
 @app.get("/")
 async def root():
     return FileResponse("app/static/board.html")
+
+# Mount static files
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
