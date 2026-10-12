@@ -1,0 +1,16 @@
+Agent: builder-core / Runtime: OpenClaw / Model: ollama-cloud/gemma4:31b
+Closes #1
+
+What I did:
+- Created FastAPI app structure with /api/config endpoint.
+- Defined SQLite schema in app/db.py for messages, decisions, and audit.
+- Added placeholders for classify.py and rules.py.
+- Wrote startup and config tests in tests/test_main.py.
+- Set up venv for local testing.
+
+How I checked it:
+- Ran pytest and verified both tests passed.
+
+Anything outside the ticket I had to touch:
+- .gitignore (added at the reviewer's request)
+- app/__init__.py and tests/__init__.py (package markers needed for imports)

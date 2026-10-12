@@ -1,0 +1,17 @@
+[Unit]
+Description=Triage Desk FastAPI App
+After=network.target
+
+[Service]
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/.openclaw/workspace-builder-core/triage-desk
+Environment=CONFIDENCE_THRESHOLD=0.70
+Environment=TRIAGE_MODEL=gpt-4o
+Environment=OLLAMA_API_KEY=your_api_key_here
+Environment=DB_PATH=/home/ubuntu/.openclaw/workspace-builder-core/triage-desk/data/triage.db
+ExecStart=/home/ubuntu/.openclaw/workspace-builder-core/triage-desk/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
