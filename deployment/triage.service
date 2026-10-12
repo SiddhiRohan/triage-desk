@@ -15,4 +15,3 @@ Restart=always
 
 [Install]
 WantedBy=multi-user.target
-Environment=DB_PATH=/home/ubuntu/triage-desk/data/triage.db
