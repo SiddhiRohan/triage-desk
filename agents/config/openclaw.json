@@ -1,0 +1,51 @@
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "ollama-cloud/gpt-oss:120b"
+      },
+      "models": {
+        "ollama-cloud/gpt-oss:120b": {}
+      },
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "heartbeat": {
+        "agentId": "main"
+      }
+    },
+    "ownership": "explicit",
+    "entries": {
+      "main": {
+        "workspace": "/home/ubuntu/.openclaw/workspace"
+      },
+      "builder-core": {
+        "name": "builder-core",
+        "workspace": "/home/ubuntu/.openclaw/workspace-builder-core",
+        "agentDir": "/home/ubuntu/.openclaw/agents/builder-core/agent",
+        "identity": {
+          "name": "builder-core"
+        },
+        "model": "ollama-cloud/gemma4:31b"
+      },
+      "builder-ui": {
+        "name": "builder-ui",
+        "workspace": "/home/ubuntu/.openclaw/workspace-builder-ui",
+        "agentDir": "/home/ubuntu/.openclaw/agents/builder-ui/agent",
+        "identity": {
+          "name": "builder-ui"
+        },
+        "model": "ollama-cloud/gemma4:31b"
+      },
+      "tester": {
+        "name": "tester",
+        "workspace": "/home/ubuntu/.openclaw/workspace-tester",
+        "agentDir": "/home/ubuntu/.openclaw/agents/tester/agent",
+        "identity": {
+          "name": "tester"
+        },
+        "model": "ollama-cloud/gpt-oss:20b"
+      }
+    }
+  }
+}
