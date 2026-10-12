@@ -1,5 +1,8 @@
-infra/*.tfstate*
-infra/.terraform/
-infra/terraform.tfvars
-*.pem
+__pycache__/
+*.pyc
+.venv/
+venv/
+node_modules/
+data/*.db
 .env
+*.log
