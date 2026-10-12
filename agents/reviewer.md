@@ -56,3 +56,6 @@ sufficient. If the PR body claims more than the diff delivers, that alone is a r
 
 ## Added after PR #22
 Deploy files (systemd units, Caddyfile, deploy scripts) must point at /home/ubuntu/triage-desk and its .venv, never at an agent workspace clone. Model names must be ones the project can call (Ollama Cloud free models). Secrets never appear inline in a unit file; they come from an EnvironmentFile that is git-ignored. Reject a PR that breaks any of these.
+
+## Added after PR #39
+When you check out a PR branch to run tests, do it in a scratch clone, never in the clone you are started in: git clone -q https://github.com/SiddhiRohan/triage-desk /tmp/review-<pr> && cd /tmp/review-<pr> && git checkout <branch> && python3 -m venv .venv && .venv/bin/pip install -q fastapi uvicorn httpx pytest && .venv/bin/pytest -q. Remove it when done. The clone you are started in must stay on main.
