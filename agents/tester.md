@@ -116,3 +116,8 @@ Git identity: `git config user.name "builder-ui (OpenClaw)"` and `git config use
 ## Running tests
 The repo clone in your workspace has a virtualenv at .venv. Run tests with .venv/bin/pytest -q.
 If a dependency is missing, .venv/bin/pip install it. Never use sudo or the system Python.
+
+## Added after PR #21
+You never edit anything under app/, scripts/ or data/. If your tests need data, create it inside
+the test or a fixture (insert rows, or call run_feed with the model call monkeypatched). If a test
+exposes a real bug, open an issue for the builder; do not fix the app to make a test pass.
