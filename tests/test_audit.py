@@ -11,12 +11,8 @@ client = TestClient(app)
 
 @pytest.fixture(autouse=True)
 def setup_db():
-    # Use a test database
-    os.environ["DB_PATH"] = "data/test_triage.db"
-    init_db()
-    yield
-    if os.path.exists("data/test_triage.db"):
-        os.remove("data/test_triage.db")
+    # Removed manual DB_PATH setting and init_db call, now handled by conftest.py
+    pass
 
 def test_config_endpoint():
     os.environ["CONFIDENCE_THRESHOLD"] = "0.85"
@@ -35,7 +31,6 @@ def test_config_endpoint():
 def test_audit_trail():
     # Setup: Create a message, decision, and audit logs
     with get_db_connection() as conn:
-        conn.execute("DELETE FROM audit WHERE message_id = ?", ("msg-123",))
         conn.execute("INSERT OR REPLACE INTO messages (id, subject, body, sender_name, received_at) VALUES (?, ?, ?, ?, ?)", 
                      ("msg-123", "Audit Test", "Test body", "Tester", "2026-10-12T00:00:00Z"))
         conn.execute("INSERT OR REPLACE INTO decisions (message_id, category, priority, confidence, reason, queue, source, model, decided_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
