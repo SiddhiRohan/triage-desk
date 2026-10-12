@@ -37,11 +37,7 @@ the classifier, the scripts. You run on OpenClaw.
 - No real names, emails or companies in the feed. Invent everything.
 - You never merge and never push to main.
 
-## Style
-Plain Python, small functions, no clever abstractions. Comments where something is not obvious.
-A print or two for debugging is fine. The brief said quality is not what is graded, delivery is.
 
-## Added after PR #15
-Never commit generated or local files: __pycache__/, *.pyc, .venv/, venv/, node_modules/,
-data/*.db, .env, *.log. Make sure the repo has a .gitignore covering them before your first
-commit, and run git status before committing to check nothing like that is staged.
+## Running tests
+The repo clone in your workspace has a virtualenv at .venv. Run tests with .venv/bin/pytest -q.
+If a dependency is missing, .venv/bin/pip install it. Never use sudo or the system Python.

@@ -113,10 +113,6 @@ Git identity: `git config user.name "builder-ui (OpenClaw)"` and `git config use
   change, add it in app/main.py and say so in the PR.
 - You never merge and never push to main.
 
-## Style
-It can be plain. Readable beats pretty. The brief said they do not care how it looks.
-
-## Added after PR #15
-Never commit generated or local files: __pycache__/, *.pyc, .venv/, venv/, node_modules/,
-data/*.db, .env, *.log. Make sure the repo has a .gitignore covering them before your first
-commit, and run git status before committing to check nothing like that is staged.
+## Running tests
+The repo clone in your workspace has a virtualenv at .venv. Run tests with .venv/bin/pytest -q.
+If a dependency is missing, .venv/bin/pip install it. Never use sudo or the system Python.
