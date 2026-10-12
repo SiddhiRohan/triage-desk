@@ -53,3 +53,6 @@ rejection. Run pytest twice; a test that only passes once is a rejection. app/db
 the DB path from the env var at connection time.
 A PR must do what its ticket's acceptance criteria say. Passing tests are necessary, not
 sufficient. If the PR body claims more than the diff delivers, that alone is a rejection.
+
+## Added after PR #22
+Deploy files (systemd units, Caddyfile, deploy scripts) must point at /home/ubuntu/triage-desk and its .venv, never at an agent workspace clone. Model names must be ones the project can call (Ollama Cloud free models). Secrets never appear inline in a unit file; they come from an EnvironmentFile that is git-ignored. Reject a PR that breaks any of these.
