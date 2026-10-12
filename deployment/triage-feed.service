@@ -6,12 +6,11 @@ After=triage.service
 Type=oneshot
 User=ubuntu
 Group=ubuntu
-WorkingDirectory=/home/ubuntu/.openclaw/workspace-builder-core/triage-desk
+WorkingDirectory=/home/ubuntu/triage-desk
 Environment=CONFIDENCE_THRESHOLD=0.70
-Environment=TRIAGE_MODEL=gpt-4o
-Environment=OLLAMA_API_KEY=your_api_key_here
-Environment=DB_PATH=/home/ubuntu/.openclaw/workspace-builder-core/triage-desk/data/triage.db
-ExecStart=/home/ubuntu/.openclaw/workspace-builder-core/triage-desk/venv/bin/python scripts/run_feed.py
+Environment=TRIAGE_MODEL=gpt-oss:20b
+EnvironmentFile=/home/ubuntu/triage-desk/.env
+ExecStart=/home/ubuntu/triage-desk/.venv/bin/python scripts/run_feed.py
 
 [Install]
 WantedBy=multi-user.target
