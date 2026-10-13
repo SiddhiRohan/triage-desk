@@ -13,6 +13,7 @@ REPO_DIR="$HOME/triage-desk"
 OPENCLAW="$HOME/.npm-global/bin/openclaw"
 cd "$REPO_DIR"
 mkdir -p logs
+git config user.name "Siddhi Rohan Chakka"; git config user.email "siddhirohanwork@gmail.com"
 git switch -q main && git pull -q
 
 orch() {  # orchestrator, quiet one-shot
