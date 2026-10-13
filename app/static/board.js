@@ -42,13 +42,17 @@ async function loadMessages() {
             if (q === 'Needs human') card.classList.add('needs-human');
             
             const priorityClass = `priority-${msg.priority.toLowerCase()}`;
+            const badgePriorityClass = `badge-priority-${msg.priority.toLowerCase()}`;
+            
+            // Add priority class to card for left border color
+            card.classList.add(priorityClass);
             
             card.innerHTML = `
                 ${q === 'Needs human' ? '<span class="badge badge-human">HUMAN REQUIRED</span>' : ''}
                 <h3>${msg.subject}</h3>
                 <div class="meta">
                     <span class="badge">${msg.category}</span>
-                    <span class="badge ${priorityClass}">${msg.priority}</span>
+                    <span class="${badgePriorityClass}">${msg.priority}</span>
                     <span>Conf: ${msg.confidence.toFixed(2)}</span>
                 </div>
             `;
