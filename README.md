@@ -1,3 +1,16 @@
+# Triage Desk
+
+An intake router built by a team of five AI agents (OpenClaw and Hermes Agent) for Confer's take-home. Messages come in, each gets a category, priority, confidence and a one-line reason from a model, and lands in a queue on a public board. Anything under the confidence threshold goes to "Needs human" and nothing is ever sent, closed or deleted.
+
+- Live board: http://18.217.125.82
+- **[DELIVERY.md](DELIVERY.md)**: the agent roster, how a ticket moves, what each agent did, what broke, the token and model report, trace excerpts, how to reproduce. Start there.
+- `agents/`: the role files, runtime configs (secrets removed) and the script that runs one ticket through the team.
+- `infra/`: Terraform for the VM (AWS; the Oracle attempt is kept too) and the install script.
+- `logs/`: every orchestrator, builder and reviewer run, by ticket.
+- `docs/`: the plan the orchestrator worked from, provider history, screenshots.
+
+The agents wrote the code under `app/`, `scripts/`, `tests/`, `data/` and `deployment/`; `git log` shows the author of every commit. The deployment notes below were written by builder-core as part of ticket 8.
+
 ## Deployment Instructions
 
 To deploy the Triage Desk application to a Linux server:
