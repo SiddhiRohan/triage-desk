@@ -100,7 +100,7 @@ the ones I filed.
 | T20 color cards by priority | #42 | #43 | builder-ui | 1 | approved and merged; the colors never rendered (CSS selector with a space, class on the card itself). Found by opening the page |
 | T21 fix the T20 selector | #44 | #45 | builder-ui | 1 | the recorded ticket; clean |
 
-Open on purpose: #35 (T15, a one-line default in `classify.py`), kept for the follow-up call.
+
 Issue numbers skip where the orchestrator made duplicates on Sunday and closed them (#3, #5,
 #7 to #10); T17 was never filed.
 
