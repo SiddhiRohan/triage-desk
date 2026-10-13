@@ -16,6 +16,11 @@ async function loadMessages() {
         const messages = await res.json();
         messagesCount = messages.length;
         
+        // Initialize counts for each queue
+        const queueNames = ['Support', 'Billing', 'Bug', 'Sales', 'General', 'Needs human'];
+        const counts = {};
+        queueNames.forEach(name => { counts[name] = 0; });
+        
         const queues = {
             'Support': document.querySelector('[data-queue="Support"] .cards'),
             'Billing': document.querySelector('[data-queue="Billing"] .cards'),
@@ -27,6 +32,9 @@ async function loadMessages() {
 
         messages.forEach(msg => {
             const q = msg.queue || 'General';
+            // Increment count for this queue
+            counts[q] = (counts[q] || 0) + 1;
+            
             const container = queues[q] || queues['General'];
             
             const card = document.createElement('div');
@@ -48,9 +56,22 @@ async function loadMessages() {
             card.onclick = () => showDetail(msg.id);
             container.appendChild(card);
         });
+        
+        // Update queue headers with counts
+        updateQueueHeaders(counts);
     } catch (e) {
         console.error('Error loading messages:', e);
     }
+}
+
+function updateQueueHeaders(counts) {
+    const queueNames = ['Support', 'Billing', 'Bug', 'Sales', 'General', 'Needs human'];
+    queueNames.forEach(name => {
+        const headerEl = document.querySelector(`[data-queue="${name}"] h2`);
+        if (headerEl) {
+            headerEl.textContent = `${name} (${counts[name] || 0})`;
+        }
+    });
 }
 
 async function updateHeader() {
