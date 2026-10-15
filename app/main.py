@@ -21,7 +21,7 @@ app = FastAPI(lifespan=lifespan)
 
 # Configuration from environment variables
 CONFIDENCE_THRESHOLD = float(os.getenv("CONFIDENCE_THRESHOLD", "0.70"))
-TRIAGE_MODEL = os.getenv("TRIAGE_MODEL", "gpt-4o")
+TRIAGE_MODEL = os.getenv("TRIAGE_MODEL", "gpt-oss:20b")
 
 class ConfigResponse(BaseModel):
     confidence_threshold: float
