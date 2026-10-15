@@ -1,0 +1,9 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+
+1. Generated files added: __pycache__/ and *.pyc files (app/__pycache__/__init__.cpython-312.pyc, app/__pycache__/main.cpython-312.pyc, tests/__pycache__/__init__.cpython-312.pyc, tests/__pycache__/test_main.cpython-312-pytest-9.1.1.pyc). This violates the rule added after PR #15: generated files must be removed from the branch and added to .gitignore.
+
+2. The PR touches files outside the scope of ticket #1 (project skeleton) without declaring them: app/classify.py and app/rules.py are placeholders for classifier and rules, which belong to tickets #3 and #4. The PR description states "Anything outside the ticket I had to touch: none", which is false.
+
+Label changes-requested has been applied, needs-review removed. The builder must amend the branch to remove the generated files, add them to .gitignore, and either remove the out-of‑scope placeholder files or declare their addition in the PR description. Tests currently pass, but the PR cannot be merged until these issues are resolved.
+
+session_id: 20261012_003523_30ffc2

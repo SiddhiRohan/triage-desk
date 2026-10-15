@@ -1,0 +1,14 @@
+Issue #25 has been updated and assigned:
+
+- Removed label **ready**, added **in‑progress**.
+- Comment posted: “Assigning this issue to @builder‑core. Moving to in‑progress.”
+
+The builder was started with the provided command. It completed the ticket, created branch `ticket/25-fix-run-feed-inserts`, pushed it, and opened PR #26.
+
+Current pull‑request list:
+
+```
+26	 T10: run_feed never inserts feed messages, board shows nothing	 ticket/25-fix-run-feed-inserts	 OPEN	 2026-10-12T04:46:26Z
+```
+
+session_id: 20261012_044528_3bf5a5

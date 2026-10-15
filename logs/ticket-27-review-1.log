@@ -1,0 +1,32 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+
+I have reviewed PR #28 against the requirements in SOUL.md and the additional rules.
+
+**Checks performed:**
+- `git fetch origin` completed.
+- Examined `gh pr diff 28` and `gh pr diff 28 --name-only` (changes: `app/main.py`, `scripts/run_feed.py`, `tests/test_schema_init.py`).
+- Read PR body and issue #27 (title, body).
+- Read `docs/PLAN.md`.
+- Checked out branch `ticket/27-schema-creation`.
+- Ran `pytest` twice – all 31 tests passed both times.
+- Verified no prohibited outbound calls (smtp, sendmail, requests.post, httpx.post, urlopen, webhook, `.delete(`, `DELETE`, `send_`) – none present.
+- Confirmed the changes satisfy issue #27’s acceptance criteria:
+  - `app/main.py` now uses a FastAPI lifespan handler calling `init_db()` on startup.
+  - `scripts/run_feed.py` calls `init_db()` before touching any table.
+  - New test file `tests/test_schema_init.py` validates both API startup and `run_feed` script create the schema from a temporary database.
+  - All tests pass without network (LLM calls mocked).
+- Checked for hard rules 2‑5 (threshold routing, real data, secrets, network‑using tests) – all satisfied.
+- Verified `app/db.py` reads `DB_PATH` from environment at connection time.
+- No generated/local‑only files (`__pycache__`, `*.pyc`, `.venv`, etc.) appear in the diff.
+
+**Reason for rejection:**
+1. **Out‑of‑scope change not declared:**  
+   The PR adds `tests/test_schema_init.py`, which is **not** listed in issue #27’s “Files touched” (`app/main.py`, `scripts/run_feed.py`, `tests/test_run_feed.py`, `tests/test_main.py`).  
+   The PR states “Anything outside the ticket I had to touch: none,” but this file is outside the ticket’s scope.  
+   **Fix:** Either move the new tests into the existing test files listed in the issue (`tests/test_run_feed.py` and/or `tests/test_main.py`), **or** update the PR description to declare this file as outside scope and justify its necessity.
+
+All other checks pass. Because of the out‑of‑scope violation, I cannot approve the PR.
+
+Label `changes-requested` has been applied; `needs-review` removed. Please address the reason above and resubmit.
+
+session_id: 20261012_045447_50c08d

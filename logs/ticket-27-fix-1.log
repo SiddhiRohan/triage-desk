@@ -1,0 +1,7 @@
+Billing or credits exhausted: HTTP 429: you (siddhirohanwork) have reached your monthly usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: c69cf034-5664-47f5-a0d7-1d085178b130)
+
+Ollama Cloud reported that billing, credits, or account entitlement is exhausted for gpt-oss:120b.
+Add credits or update billing with that provider, then retry.
+You can switch providers temporarily with /model <model> --provider <provider>.
+
+session_id: 20261012_045557_17836e

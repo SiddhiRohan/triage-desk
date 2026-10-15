@@ -1,0 +1,20 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+- Acceptance criteria satisfied: classify.py calls Ollama model via OpenAI-compatible endpoint using env vars.
+- Prompt built correctly expecting JSON with category, priority, confidence, reason.
+- JSON parsed; retry once on parse error with error included.
+- Fallback to rules.py on HTTP 402/429, network errors, or second parse failure; fallback confidence <=0.5 and source=rules.
+- run_feed.py processes messages one at a time, idempotent (skips decided messages).
+- Unit tests mock model call and test success, retry, fallback logic.
+- No parallel model calls.
+- No prohibited outbound calls (only classifier to model API).
+- Items under confidence threshold always routed to Needs human.
+- No real/personal data in feed or tests.
+- No secrets in repo.
+- Tests run offline (mocked).
+- No generated/local-only files added.
+- PR touches only files in scope.
+- Hard rules from PLAN.md satisfied.
+
+The PR has been approved and the `needs-review` label removed.
+
+session_id: 20261012_013029_7ef84e

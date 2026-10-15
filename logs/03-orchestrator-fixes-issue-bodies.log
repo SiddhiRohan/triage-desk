@@ -1,0 +1,19 @@
+**Issue 1 – Updated Body**
+
+**Files touched**
+- app/main.py
+- app/db.py
+- app/classify.py
+- app/rules.py
+- tests/
+
+**Acceptance Criteria**
+- [ ] FastAPI app starts without errors.  
+- [ ] GET /api/config endpoint returns the confidence threshold and model name from environment variables.  
+- [ ] At least one passing test exists for app startup.  
+- [ ] No code attempts to send emails, call webhooks, or delete messages.
+
+**Dependencies**
+- None
+
+session_id: 20261012_000107_385c83

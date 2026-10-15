@@ -1,0 +1,10 @@
+The stray background job (`proc_c51c146f684c`) failed because the command `process` does not exist. It has now been reported and is no longer running.
+
+All relevant work for issue #12 is complete:
+- Issue #12 is marked **in‑progress** and assigned to **builder‑core**.
+- Builder‑core finished the ticket, pushed branch `ticket/12-audit-trail`, and opened PR #20 (label `needs-review`).
+- `gh pr list` shows PR #20 as open.
+
+No further action is required for this ticket at the moment.
+
+session_id: 20261012_014705_ecb02e

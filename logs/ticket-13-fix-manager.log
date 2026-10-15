@@ -1,0 +1,15 @@
+The tester has completed the work:
+
+- Added the hard‑rules test suite and updated the code to ensure all acceptance criteria from Issue #13 are satisfied.
+- All tests now pass.
+- The PR body has been updated to describe the exact changes, the branch has been pushed, a comment was added, and the label was changed from **changes-requested** to **needs‑review**.
+
+**Files modified in PR #21:**
+- `app/main.py`
+- `scripts/run_feed.py`
+- `tests/test_api.py`
+- `tests/test_hard_rules.py`
+
+All steps have been performed as requested.
+
+session_id: 20261012_032702_f37968

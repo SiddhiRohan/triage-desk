@@ -1,0 +1,16 @@
+Issue #4 has been updated:
+
+- Removed label **ready**, added label **in-progress**.
+- Comment added: *Assigning to builder‑core.*
+
+The builder‑core agent was started with the provided command, completed the ticket, and opened a pull request.
+
+**Current pull request list:**
+
+```
+17    T3: Keyword fallback classifier    ticket/4-keyword-classifier    OPEN    2026-10-12T01:25:37Z
+```
+
+The PR is #17, targeting the changes for issue #4.
+
+session_id: 20261012_012454_a070f4

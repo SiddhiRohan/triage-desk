@@ -1,0 +1,17 @@
+The issue was updated, the builder completed ticket #1, and a pull request was opened.
+
+**What was done**
+- Removed the `ready` label from issue #1 and added `in-progress`.
+- Commented on issue #1: “Assigning to builder-core”.
+- Ran `openclaw` for **builder‑core**; it created the project skeleton, added the required FastAPI endpoint, database schema, placeholder modules, and tests. All tests passed.
+- Pushed a branch `ticket/1-project-skeleton` and opened PR #15 with the body format from **AGENTS.md**, labeling it `needs-review`.
+
+**PR list output**
+
+```
+15  T1: Project skeleton   ticket/1-project-skeleton   OPEN   2026-10-12T00:06:39Z
+```
+
+The PR is now ready for review.
+
+session_id: 20261012_000542_c9a31f

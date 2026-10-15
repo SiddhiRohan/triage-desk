@@ -1,0 +1,16 @@
+Issue #9 has been closed as a duplicate of #11, with a comment added.
+
+Current open issues:
+
+```
+14   OPEN   T8: Deploy with Caddy and systemd                     ready, agent/builder-core
+13   OPEN   T7: Hard rules test suite                          ready, agent/tester
+12   OPEN   T6: Audit trail and config endpoint                ready, agent/builder-core
+11   OPEN   T5: Board page and messages API                   ready, agent/builder-ui
+6    OPEN   T4: LLM classifier, queue runner, and run_feed script   ready, agent/builder-core
+4    OPEN   T3: Keyword fallback classifier                    ready, agent/builder-core
+2    OPEN   T2: Synthetic feed                                 ready, agent/builder-core
+1    OPEN   T1: Project skeleton                               ready, agent/builder-core
+```
+
+session_id: 20261011_235654_ae8bf1

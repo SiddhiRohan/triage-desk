@@ -1,0 +1,9 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+- Finding 1 (unit file paths): WorkingDirectory and Execstart are correctly set to /home/ubuntu/triage-desk and .venv. However, DB_PATH is not set in the unit files as requested by the manager. The app reads DB_PATH from the environment with a default of 'data/triage.db', which relative to the WorkingDirectory is correct, but the manager explicitly asked to set DB_PATH in both units. Please add `Environment=DB_PATH=/home/ubuntu/triage-desk/data/triage.db` (or the appropriate path) to both deployment/triage.service and deployment/triage-feed.service.
+- Finding 2 (TRIAGE_MODEL): Fixed. Both unit files now set TRIAGE_MODEL=gpt-oss:20b.
+- Finding 3 (EnvironmentFile): Fixed. Both unit files use EnvironmentFile=/home/ubuntu/triage-desk/.env for OLLAMA_API_KEY, and .env is already git-ignored (line 7 of .gitignore).
+- Finding 4 (uvicorn binding): Fixed. ExecStart in triage.service now binds to 127.0.0.1.
+
+PR #22 requires changes to address finding 1. Label changed to changes-requested, needs-review removed.
+
+session_id: 20261012_040609_ec6196

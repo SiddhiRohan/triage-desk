@@ -1,0 +1,10 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+- pytest fails: 
+  - tests/test_api.py::test_api_messages_list: sqlite3.OperationalError: no such table: messages
+  - tests/test_api.py::test_api_message_detail: sqlite3.OperationalError: no such table: messages
+  - tests/test_main.py::test_app_startup: JSONDecodeError because endpoint now returns HTML, not JSON
+These failures indicate the database is not initialized and the test suite is not self-contained. The PR must ensure tests pass in a clean environment (e.g., by initializing the DB in a test fixture or providing minimal test data). Until then, the PR cannot be approved.
+
+Label changes-requested applied, needs-review removed.
+
+session_id: 20261012_013949_d9ab44

@@ -1,0 +1,16 @@
+Reviewer: reviewer / Runtime: Hermes / Model: deepseek-v4-flash
+- Does the diff do what the issue's acceptance criteria say? All of them? Yes.
+- Does it touch files outside the ticket's scope? Was that declared in the PR? No, and not declared needed because it doesn't touch outside.
+- Hard rule 1: grep for prohibited patterns: no matches.
+- Hard rule 2: any path where an item under the threshold ends up in a queue other than Needs human? No, because confidence <=0.5 < threshold (0.7) -> Needs human.
+- Hard rule 3: any real-looking names, emails, phone numbers, company names in the feed or tests? No, all synthetic.
+- Hard rule 4: any key, token or password in any file? No.
+- Hard rule 5: do the tests need the network? No.
+- Is the model called one at a time? Not applicable to this PR, but no violation.
+- Is there a test for the new behaviour? Yes, tests/test_rules.py.
+- Does the diff add any generated or local-only files? No.
+LGTM.
+
+I have approved PR #17 by adding the `approved` label and removing the `needs-review` label. The verdict is approval.
+
+session_id: 20261012_012547_d81fa2

@@ -1,0 +1,15 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nvidia/nemotron-3-super-120b-a12b
+- Diff implements acceptance criteria: each card gets left border colored by priority (red high, blue normal, grey low) via added CSS classes and JS; no new API call; card text, detail panel, and queue headers unchanged.
+- Hard rule 1: grep for smtp, sendmail, requests.post, httpx.post, urlopen, webhook, .delete(, DELETE, send_ shows no matches in changed files.
+- Hard rule 2: confidence threshold logic unchanged; items under threshold still route to Needs human.
+- Hard rule 3: no real-looking names, emails, phone numbers, company names in feed or tests (unchanged).
+- Hard rule 4: no keys, tokens, or passwords in changed files.
+- Hard rule 5: tests run offline; pytest -q passes (40 passed).
+- Model invocation unchanged (one at a time).
+- No generated or local-only files added (__pycache__, *.pyc, .venv/, etc.).
+- Files touched are exactly those specified in issue: app/static/board.html, app/static/board.js.
+- PR body accurately describes changes.
+
+Label approved applied, needs-review removed. PR #43 is ready to merge.
+
+session_id: 20261013_001647_e9ed2c

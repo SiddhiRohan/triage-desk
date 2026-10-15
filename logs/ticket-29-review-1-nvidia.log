@@ -1,0 +1,16 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nvidia/nemotron-3-super-120b-a12b
+- Acceptance criteria met: TRIAGE_API_URL and TRIAGE_API_KEY environment variables implemented with proper fallback; README updated; test verifies custom endpoint usage.
+- Scope limited to declared files: only README.md, app/classify.py, tests/test_classify.py changed, matching issue description.
+- Hard rule 1 (no prohibited outbound calls): grep shows no smtp, sendmail, requests.post, httpx.post (except classifier call), urlopen, webhook, .delete(, DELETE, or send_.
+- Hard rule 2 (sub-threshold items only to Needs human): logic unchanged; items under CONFIDENCE_THRESHOLD still routed to Needs human queue.
+- Hard rule 3 (no real personal data): no real names, emails, phone numbers, or company names introduced.
+- Hard rule 4 (no secrets): no keys, tokens, or passwords appear in diff.
+- Hard rule 5 (tests run offline): new test mocks httpx.Client.post; no network required.
+- Model called one at a time: existing behavior preserved; classifier still processes messages sequentially.
+- Test for new behaviour: added test_classify_uses_custom_endpoint verifies custom URL usage.
+- No generated/local-only files added: diff contains no __pycache__, *.pyc, .venv/, etc.
+- Deploy files unchanged: no systemd units, Caddyfile, or scripts modified.
+- Tests pass twice: pytest runs consistently pass (32 passed both runs).
+All checks satisfied. Label approved, needs-review removed.
+
+session_id: 20261012_054650_63529c

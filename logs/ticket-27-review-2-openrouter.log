@@ -1,0 +1,14 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nvidia/nemotron-3-super-120b-a12b:free
+- Acceptance criteria: app/main.py calls init_db() on startup via lifespan; scripts/run_feed.py calls init_db() before touching tables.
+- PR body declares the newly added file tests/test_schema_init.py under "Anything outside the ticket I had to touch".
+- All tests pass (31 passed).
+- No disallowed outbound calls (smtp, sendmail, requests.post, etc.) in diff.
+- No generated or local-only files added (__pycache__, *.pyc, .venv, etc.) in diff.
+- Tests use tmp_path fixture, do not touch real data/triage.db.
+- Model is called one at a time (classifier mocked).
+- No real-looking secrets, keys, etc. in diff.
+LGTM.
+
+Label approved set, needs-review removed. PR #28 is ready to merge.
+
+session_id: 20261012_051435_efa47b

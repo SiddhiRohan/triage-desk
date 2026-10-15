@@ -1,0 +1,17 @@
+The tester has completed the requested changes on PR #21, and the PR now has the **needs‑review** label.
+
+I’ve notified Rohan to assign a reviewer:
+
+- Comment posted on PR #21 requesting a reviewer assignment.
+
+The status file has been updated to reflect these actions:
+
+```
+1|1|2026-10-12: Issue #2 assigned to builder-core, PR #16 opened, reviewed and approved.
+2|2|2026-10-12: PR #21 changes-requested feedback addressed, tests passed, moved to needs-review.
+3|3|2026-10-12: Notified Rohan to assign reviewer for PR #21, awaiting review.
+```
+
+The PR is now ready for review. Let me know if there’s anything else to handle.
+
+session_id: 20261012_034448_79d91c

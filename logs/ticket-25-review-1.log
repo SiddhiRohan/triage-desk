@@ -1,0 +1,16 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+- Acceptance criteria satisfied: run_feed inserts messages via INSERT OR IGNORE before classification, idempotent, test verifies 30 messages/30 decisions and API returns 30 items, runs twice.
+- No files outside ticket scope touched; PR declares none.
+- Hard rule 1: grep for prohibited outbound calls found none.
+- Hard rule 2: traced threshold logic; items under confidence threshold still route to Needs human (classify.py unchanged).
+- Hard rule 3: feed and test contain no real personal data (names are fictional).
+- Hard rule 4: no keys, tokens, or passwords in changed files.
+- Hard rule 5: tests use mocking; no network required.
+- Model called one at a time (classify_message sequential).
+- New behaviour covered by added test test_run_feed.py.
+- No generated/local-only files added; pytest runs clean twice.
+All checks pass. LGTM.
+
+Label updated: approved, needs-review removed.
+
+session_id: 20261012_044638_de68ce

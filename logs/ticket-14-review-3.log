@@ -1,0 +1,9 @@
+I have re-reviewed PR #22. The tests pass, but the PR fails to satisfy the manager’s requirement to set `DB_PATH` in both systemd unit files.
+
+**Findings:**
+- `deployment/triage.service` – missing `Environment=DB_PATH=/home/ubuntu/triage-desk/data/triage.db` in the `[Service]` section.
+- `deployment/triage-feed.service` – missing `Environment=DB_PATH=/home/ubuntu/triage-desk/data/triage.db` in the `[Service]` section.
+
+**Verdict:** Changes are required. I have added the label `changes-requested`, removed `needs-review`, and posted a comment on the PR with the specific missing items and how to fix them.
+
+session_id: 20261012_041815_5fa339

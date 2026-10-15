@@ -1,0 +1,13 @@
+I've assigned issue #33 to builder-core, moved it to `in-progress`, and added a comment indicating the assignment.  
+
+The builder-core agent then picked up the ticket, completed the work, and opened a pull request:
+
+- **PR #34**: *T14: model field should be null when the rules fallback decides*  
+  - Branch: `ticket/29-configurable-endpoint`  
+  - Status: OPEN  
+  - Created: 2026-10-12T18:09:06Z  
+  - Link: https://github.com/SiddhiRohan/triage-desk/pull/34  
+
+The PR is ready for review. Please proceed with the review process as outlined in the team’s workflow.
+
+session_id: 20261012_180653_8408e4

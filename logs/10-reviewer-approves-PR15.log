@@ -1,0 +1,15 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+- Checked acceptance criteria: FastAPI app starts without errors (test passes). GET /api/config returns confidence threshold and model name from environment variables (implementation reads os.getenv). At least one passing test for app startup exists. No code attempts to send emails, call webhooks, or delete messages.
+- Verified PR touches only files in ticket scope plus declared out-of-scope files: .gitignore, app/__init__.py, tests/__init__.py (declared in PR body).
+- Hard rule 1: grep for prohibited outbound calls (smtp, sendmail, requests.post, httpx.post, urlopen, webhook, .delete(, DELETE, send_) found none.
+- Hard rule 2: No classification logic present, thus no path where an item under threshold ends up in a queue other than Needs human.
+- Hard rule 3: No real-looking names, emails, phone numbers, company names in feed or tests.
+- Hard rule 4: No keys, tokens, or passwords in any file.
+- Hard rule 5: Tests do not require network (uses TestClient).
+- Model is not yet called; no violation.
+- Tests for new behaviour exist (test_app_startup, test_get_config).
+- No generated or local-only files added (only .gitignore patterns added).
+
+Label `approved` added, label `needs-review` removed. PR #15 is ready to be merged.
+
+session_id: 20261012_010258_65f656

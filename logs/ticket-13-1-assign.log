@@ -1,0 +1,13 @@
+Issue #13 has been updated:
+
+- Removed the `ready` label and added the `in‑progress` label.
+- Comment added: “Assigning to tester”.
+- The tester has been started with the provided command; the process completed and created PR #21.
+
+Current pull‑request list:
+
+```
+21  Hard rules test suite  ticket/13-hard-rules-test  OPEN  2026-10-12T03:11:49Z
+```
+
+session_id: 20261012_030820_b8fabb

@@ -1,0 +1,14 @@
+The builder‑core agent has finished processing PR #20:
+
+* Implemented the three change‑request items:
+  1. Added a `tests/conftest.py` fixture that creates a temporary SQLite file (via `tmp_path`) and sets `DB_PATH` for every test.
+  2. Removed the `DELETE FROM audit` cleanup logic and the hard‑coded `data/test_triage.db` handling from the tests.
+  3. Updated `app/db.py` to read `DB_PATH` from the environment each time a connection is opened.
+
+* Ran the full test suite twice; all tests passed both runs.
+
+* Verified a clean `git status` (no staged changes), committed the updates under the builder’s author information, pushed to the PR branch, left a comment on the PR, and changed the label from **changes‑requested** to **needs‑review**.
+
+The PR is now ready for review. Let me know if there’s anything else you’d like to do.
+
+session_id: 20261012_015709_dcaf40

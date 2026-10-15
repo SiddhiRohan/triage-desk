@@ -1,0 +1,18 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+
+LGTM.
+- Checked that the diff meets the acceptance criteria of issue #23.
+- Verified the PR only touches files in scope (deployment/triage-feed.service).
+- Hard rule 1: no forbidden outbound calls in the diff.
+- Hard rule 2: routing logic unchanged, so low confidence items still go to Needs human.
+- Hard rule 3: no new real-looking names, emails, etc. introduced.
+- Hard rule 4: no secrets, keys, or tokens added.
+- Hard rule 5: tests run offline (no network required).
+- Confirmed the model is called one at a time (existing behavior unchanged).
+- Verified no generated or local-only files were added.
+- Confirmed deploy files point to correct paths and use EnvironmentFile for secrets.
+- Ran pytest twice; all tests pass.
+
+The PR has been approved and the `needs-review` label removed. The `approved` label has been added.
+
+session_id: 20261012_043501_bb7906

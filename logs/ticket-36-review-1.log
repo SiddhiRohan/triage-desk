@@ -1,0 +1,19 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nvidia/nemotron-3-super-120b-a12b
+LGTM.
+- Checked diff against issue #36 acceptance criteria: board header shows model, threshold, and total messages; count derived from existing /api/messages fetch; no additional API call.
+- Verified existing tests pass (ran pytest twice, 36 passed both times).
+- Confirmed no changes to files outside ticket scope (only app/static/board.js).
+- Grep of diff for forbidden patterns (smtp, sendmail, requests.post, httpx.post, urlopen, webhook, .delete(, DELETE, send_) found none.
+- Verified no path where sub-threshold items go to non-Needs-human queue (no changes to routing logic).
+- Confirmed no real personal data in changes (only JS variables).
+- Checked no keys, tokens, or passwords in changes.
+- Verified tests do not require network (they mock model call; changes are frontend).
+- Confirmed model is called one at a time (backend unchanged).
+- No new test added for frontend behavior (not required by project; existing tests pass).
+- No generated or local-only files added.
+- No deploy files touched.
+- PR does not overclaim; diff matches description.
+
+Approved PR #37. Label set to approved, needs-review removed.
+
+session_id: 20261012_225125_20f341

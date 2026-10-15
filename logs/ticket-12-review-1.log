@@ -1,0 +1,7 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+- Missing unit test that verifies audit rows are created when a decision is made (classifier writes to audit table). The existing tests only verify that the API returns audit rows, not that they are created by the classifier.
+All other checks pass: scope limited to tests/test_audit.py, no forbidden calls, no real data, no secrets, tests run offline, under-threshold items go only to Needs human.
+
+Label changes-requested has been applied; needs-review removed.
+
+session_id: 20261012_014810_e94b2b

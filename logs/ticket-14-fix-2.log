@@ -1,0 +1,44 @@
+**Summary of actions taken for PR #22**
+
+1. **Reviewed the latest review comments** – The manager’s review flagged that the `DB_PATH` environment variable was missing from both systemd unit files (`deployment/triage.service` and `deployment/triage-feed.service`).
+
+2. **Commented on the PR** to inform the builder that the `DB_PATH` variable still needed to be added.
+
+3. **Instructed the builder‑core agent** (via `openclaw agent`) to:
+   * Check out the branch `ticket/14-deploy-setup`.
+   * Append  
+   ```
+   Environment=DB_PATH=/home/ubuntu/triage-desk/data/triage.db
+   ```  
+   to the two unit files, next to the existing `Environment=` lines.
+   * Commit the change, push the branch, comment on the PR about the addition, and move the PR label from `changes‑requested` to `needs-review`.
+
+4. **Verified the builder’s execution** – The background process reported successful completion:
+   * The `DB_PATH` line was appended to both unit files.
+   * The commit was pushed.
+   * A comment was added to PR #22.
+   * The label was updated to `needs-review`.
+
+5. **Re‑checked the files** after the builder’s run. At this point the files still show the original content **without** the newly appended `Environment=DB_PATH=…` line. The builder’s output indicates the line was appended, but the file contents remain unchanged, indicating the change was not applied to the repository.
+
+**Current status**
+
+* The `DB_PATH` environment variable is still missing from:
+  * `deployment/triage.service`
+  * `deployment/triage-feed.service`
+
+* PR #22 still has the `needs-review` label, but the underlying change that the manager requested has not been persisted in the repo.
+
+**Next steps (to be performed by the appropriate builder)**  
+
+1. **Edit the unit files** to add the line  
+   `Environment=DB_PATH=/home/ubuntu/triage-desk/data/triage.db`  
+   directly after the other `Environment=` lines (e.g., after line 10 in `triage.service` and after line 11 in `triage-feed.service`).
+
+2. **Commit** the modification with a clear message (e.g., “Add DB_PATH env var to systemd units”), **push** to the `ticket/14-deploy-setup` branch, and **comment** on PR #22 confirming the change.
+
+3. Ensure the PR label reflects the updated state (`needs-review`).
+
+Once those edits are in place and verified (by re‑reading the files), the PR will satisfy the manager’s requirement and be ready for final review.
+
+session_id: 20261012_041055_b17e4f

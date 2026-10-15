@@ -1,0 +1,23 @@
+I read the review comment on PR #20:
+
+- The reviewer noted that the test suite is missing a unit test that verifies audit rows are created when the classifier makes a decision (the classifier writes to the audit table). All other checks passed.
+
+**Valid finding:** The missing unit test is in scope (the review mentions `tests/test_audit.py`, which is listed in issue #12). The builder needs to add a test that confirms audit rows are written by the classifier.
+
+I posted a comment on PR #20 informing the builder of this required change:
+
+> The review identified a missing unit test verifying that audit rows are created when a decision is made (classifier writes to audit table). This finding is valid and must be fixed. Please add the appropriate test in tests/test_audit.py.
+
+Then I instructed the builder‑core agent to address the review, run the test suite, commit the fixes, push the branch, update the PR comment, and retag the PR. The builder completed the work:
+
+- Added a new test `test_classifier_creates_audit_row` in `tests/test_audit.py` that confirms a classifier call inserts a row into the audit table.
+- Adjusted the test setup to avoid `sqlite3.IntegrityError` issues.
+- Ran the full test suite (`pytest`) – all tests now pass.
+- Verified no unintended changes are staged (`git status` clean).
+- Committed the changes and pushed them to the PR branch.
+- Commented on the PR summarising the changes.
+- Updated the PR labels: removed `changes-requested` and added `needs-review`.
+
+The builder reports the process completed successfully (exit code 0). The PR is now ready for review.
+
+session_id: 20261012_014915_8b35cb

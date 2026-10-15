@@ -1,0 +1,11 @@
+Issue #23 has been moved to **in‑progress** and assigned to @builder‑core, and the builder has completed the work, creating branch `ticket/23-fix-pythonpath` and opening PR **#24**.
+
+Current open PRs (latest 5):
+
+```
+24	T9: triage-feed.service fails, app module not on path	ticket/23-fix-pythonpath	OPEN	2026-10-12T04:34:41Z
+```
+
+The status file has been updated with this action.
+
+session_id: 20261012_043358_04f814

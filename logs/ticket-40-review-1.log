@@ -1,0 +1,20 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nvidia/nemotron-3-super-120b-a12b
+
+LGTM.
+1. Diff meets all acceptance criteria of issue #40.
+2. No files touched outside the scope (app/static/board.js only).
+3. Hard rule 1: no prohibited strings in diff.
+4. Hard rule 2: no change to routing, so items under threshold still go to Needs human.
+5. Hard rule 3: no real data in feed or tests (unchanged).
+6. Hard rule 4: no secrets in changed file.
+7. Hard rule 5: tests run offline (passed twice).
+8. Model calling unchanged (one at a time).
+9. No new test required (as per issue).
+10. No generated files added.
+11. Used gh pr diff as source of truth.
+12. Tests pass twice and do not delete rows.
+13. PR body matches diff.
+14. No deploy files changed.
+15. Reviewed in scratch clone.
+
+session_id: 20261012_235519_d8b1cb

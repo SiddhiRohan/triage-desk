@@ -1,0 +1,16 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+- Acceptance criteria fully satisfied: board page served at /, shows subject/category/priority/confidence, click opens panel with body/reason/source/model/time, Needs human visually distinct, API endpoints /api/messages, /api/messages/{id}, /api/config work as specified.
+- Scope: changes limited to app/main.py, app/static/board.html, app/static/board.js, tests/test_api.py, and necessary update to tests/test_main.py (to match new HTML root). No files outside ticket scope touched without justification.
+- Hard rule 1: grep for smtp, sendmail, requests.post, httpx.post, urlopen, webhook, .delete(, DELETE, send_ shows no matches in the diff.
+- Hard rule 2: queue column originates from classify.py/rules.py; board never alters queue, so items under confidence threshold remain in Needs human queue.
+- Hard rule 3: feed and tests contain only synthetic data; no real names, emails, phone numbers, or company names.
+- Hard rule 4: no keys, tokens, or passwords present in any changed file.
+- Hard rule 5: tests use TestClient and offline DB; no network calls required.
+- Model invocation unchanged: classifier in classify.py still calls model one at a time.
+- New behaviour covered by tests in tests/test_api.py.
+- No generated or local-only files (__pycache__, *.pyc, .venv/, etc.) added.
+- All pytest pass (17 passed).
+
+The PR has been approved and the `needs-review` label removed.
+
+session_id: 20261012_014228_8c2798

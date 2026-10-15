@@ -1,0 +1,7 @@
+Billing or credits exhausted: HTTP 429: you (siddhirohanwork) have reached your monthly usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: 06d351e5-5092-4c25-be34-c5ad8e25a151)
+
+Ollama Cloud reported that billing, credits, or account entitlement is exhausted for nemotron-3-super.
+Add credits or update billing with that provider, then retry.
+You can switch providers temporarily with /model <model> --provider <provider>.
+
+session_id: 20261012_045643_d734bf

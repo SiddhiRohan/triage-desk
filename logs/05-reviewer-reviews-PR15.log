@@ -1,0 +1,13 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+LGTM.
+- Acceptance criteria met: FastAPI app starts, /api/config returns env vars, passing tests exist, no email/webhook/delete code.
+- Scope limited to declared files: app/main.py, app/db.py, app/classify.py, app/rules.py, tests/ (plus __init__.py and pycache).
+- Hard rule 1: grep for smtp, sendmail, requests.post, httpx.post, urlopen, webhook, .delete(, DELETE, send_ shows no matches.
+- Hard rule 2: no path for under-threshold items to go elsewhere (classification logic is placeholder).
+- Hard rule 3: no real-looking names, emails, phone numbers, company names in feed or tests (feed not yet added, tests contain only assertions).
+- Hard rule 4: no keys, tokens, or passwords in any file (only SQL KEY keywords).
+- Hard rule 5: tests do not need the network (use TestClient only).
+- Model called one at a time: N/A (placeholder).
+- Test for new behaviour exists: test_app_startup and test_get_config.
+
+session_id: 20261012_001101_9cbe49

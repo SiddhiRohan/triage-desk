@@ -1,0 +1,17 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+- Acceptance criterion 1: Tests assert that messages with confidence below the threshold are placed in Needs human queue. Verified via test_confidence_below_threshold_routes_to_needs_human in tests/test_hard_rules.py.
+- Acceptance criterion 2: Tests confirm no code contains outbound calls (grep for smtp, requests.post, httpx.post, DELETE routes, send). Verified via test_no_prohibited_outbound_calls and test_no_api_key_like_strings in tests/test_hard_rules.py.
+- Acceptance criterion 3: Board page lists every message in the correct queue. Verified via API tests: test_api_messages_returns_all_feed_messages and test_api_message_detail_contains_decision_and_audit in tests/test_api.py.
+- Acceptance criterion 4: All hard rules from PLAN.md are validated by tests. Verified via comprehensive test suite in tests/test_hard_rules.py.
+- Acceptance criterion 5: All tests pass (pytest returns exit code 0). Verified by running .venv/bin/pytest -q twice; both runs passed with 28 tests.
+- Scope: Only test files changed (tests/conftest.py, tests/test_api.py, tests/test_hard_rules.py); no changes to app/, scripts/, or data/.
+- Test isolation: Tests use temporary SQLite database via tmp_path fixture; do not read/write real data/triage.db.
+- Network: Tests do not require network; LLM calls are monkey-patched or use rule-based classifier.
+- Generated files: No __pycache__, *.pyc, .venv/, etc. added.
+- Hard rule 2: Low-confidence items only route to Needs human; verified by test_confidence_below_threshold_routes_to_needs_human.
+- Hard rule 3: No real-looking names, emails, phone numbers, company names in feed or tests; feed unchanged, tests use existing feed data.
+- Hard rule 4: No keys, tokens, or passwords in diff.
+- Hard rule 5: Model called one at a time (actually not at all due to mocking; feed processing uses rule-based classifier).
+- Outbound call check: Diff contains prohibited strings only in test file patterns (for validation), not in production code.
+
+session_id: 20261012_035121_3b28d6

@@ -1,0 +1,16 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+- Checks acceptance criteria: all satisfied (Caddy reverse proxy, systemd units with Restart=always, run_feed via oneshot service, README deployment docs).
+- No out-of-scope changes; only files listed in issue touched.
+- Hard rule 1: grep for prohibited patterns found none.
+- Hard rule 2: classification unchanged, items under threshold still go only to Needs human.
+- Hard rule 3: no real personal data in added files.
+- Hard rule 4: only placeholder API key present, no real secrets.
+- Hard rule 5: tests pass offline; no network calls added.
+- Model called one at a time unchanged.
+- No new behaviour requiring test; deployment verification is manual per acceptance.
+- No generated/local-only files added.
+LGTM.
+
+The PR has been approved and the `needs-review` label removed. The `approved` label has been added.
+
+session_id: 20261012_035556_dfb313

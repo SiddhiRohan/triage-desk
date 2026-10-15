@@ -1,0 +1,12 @@
+- Assigned issue #42 to builder-ui (removed `ready`, added `in-progress`, commented assignment).  
+- Builder-ui completed the ticket:  
+  - Updated `app/static/board.html` and `app/static/board.js` to color‑code card left borders by priority (red/high, blue/normal, grey/low) while preserving the `.needs-human` dashed style.  
+  - All tests pass (`pytest -q` → 40 passed).  
+  - No generated files staged.  
+  - Created branch `ticket/42-priority-colors`, committed, pushed, and opened PR #43.  
+- PR #43 is labeled `needs-review` and ready for review.  
+- Updated `docs/status.md` with a status line for this run.  
+
+No blockers at this time.
+
+session_id: 20261013_001353_19db04

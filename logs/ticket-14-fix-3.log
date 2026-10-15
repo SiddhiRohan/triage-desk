@@ -1,0 +1,7 @@
+I have removed the stray `DB_PATH` lines from the end of the systemd unit files.
+
+**Changes made:**
+- Deleted the duplicate `Environment=DB_PATH=...` line appearing after `WantedBy=multi-user.target` in both `deployment/triage.service` and `deployment/triage-feed.service`.
+- Confirmed that the correct `DB_PATH` line remains in the `[Service]` section of both files.
+- Committed and pushed the changes to the `ticket/14-deploy-setup` branch.
+- Commented on PR #22 to notify the reviewer.

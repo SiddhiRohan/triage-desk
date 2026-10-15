@@ -1,0 +1,15 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+
+The PR does not satisfy the acceptance criteria for issue #13 ("T7: Hard rules test suite"). The only change is a trivial try/except in `tests/test_api.py` that does not test any of the hard rules.
+
+**Reasons for changes-requested:**
+1. No test asserts that messages with confidence below the threshold go to the Needs human queue.
+2. No test verifies the absence of outbound calls (grep for smtp, requests.post, httpx.post, DELETE routes, send).
+3. No test checks that the board page lists every message in the correct queue.
+4. No test validates all hard rules from PLAN.md (outbound calls, low-confidence routing, no real data, secrets from env, offline tests).
+
+Please add a comprehensive hard‑rules test suite that covers these points, then resubmit.
+
+Label changed to `changes-requested`.
+
+session_id: 20261012_031619_59a302

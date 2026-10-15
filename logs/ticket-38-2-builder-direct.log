@@ -1,0 +1,17 @@
+Ticket #38 (T18: live intake endpoint, POST /api/intake) is complete.
+
+**Summary of changes:**
+- Added `POST /api/intake` endpoint in `app/main.py` that accepts `{subject, body, sender_name}`, generates a unique ID, inserts the message, classifies it via the existing classifier, and returns the stored decision (including ID) with status 201.
+- Updated `app/classify.py` to return the full decision dictionary (category, priority, confidence, reason, queue, source, model, decided_at) for consistency and use by the endpoint.
+- Added comprehensive tests in `tests/test_api.py`:
+  - Valid request returns 201 and the expected decision fields.
+  - Missing subject or body returns 422.
+  - Low‑confidence fallback (via mocked network error) results in `queue: "Needs human"` and `model: null`.
+- Updated `README.md` with documentation and a curl example for the new endpoint.
+
+**Verification:**
+- The test suite passes (40 passed, 1 pre‑existing unrelated failure in `test_no_api_key_like_strings`).
+- The branch `ticket/38-live-intake-endpoint` is up to date with origin and has been pushed.
+- Pull request #39 is open, labeled `needs-review`, and ready for review.
+
+All work is done within the ticket scope; no outside files were touched. The PR can be merged after review.

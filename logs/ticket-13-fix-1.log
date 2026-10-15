@@ -1,0 +1,11 @@
+The review on PR #21 has been addressed: the builder added the missing tests and fixes, the test suite now passes, and the PR has been moved from **changes‑requested** to **needs‑review**.  
+
+I recorded this in the status log:
+
+```
+2026-10-12: PR #21 changes-requested feedback addressed, tests passed, moved to needs-review.
+```
+
+The status file (`docs/status.md`) has been updated accordingly. The PR is now ready for the reviewer’s final check and eventual merge.
+
+session_id: 20261012_031317_936a7a

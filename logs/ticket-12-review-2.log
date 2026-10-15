@@ -1,0 +1,16 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+- Acceptance criteria: verified via tests (test_config_endpoint, test_audit_trail, test_classifier_creates_audit_row)
+- Scope: only tests/test_audit.py, which is in scope
+- Hard rule 1: grep for prohibited patterns found one match in test (DELETE in audit table cleanup) but considered acceptable as not a violation (not deleting a message, test-only)
+- Hard rule 2: verified queue logic sends items under threshold to Needs human
+- Hard rule 3: no real personal data in tests
+- Hard rule 4: no keys/tokens/passwords in diff
+- Hard rule 5: tests do not need network
+- Model called one at a time: existing code does so
+- Test for new behaviour: yes
+- No generated/local-only files added in diff
+LGTM.
+
+The PR has been approved and the label needs-review removed. The approved label has been added.
+
+session_id: 20261012_015024_d5fbbf

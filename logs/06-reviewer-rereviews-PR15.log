@@ -1,0 +1,45 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+
+I have re-reviewed PR #15 against the updated checklist in agents/reviewer.md, which now includes a check for generated/local-only files before the verdict.
+
+**Findings:**
+
+1. **Generated files present:** The diff adds `__pycache__/*.pyc` files:
+   - `app/__pycache__/__init__.cpython-312.pyc`
+   - `app/__pycache__/main.cpython-312.pyc`
+   - `tests/__pycache__/__init__.cpython-312.pyc`
+   - `tests/__pycache__/test_main.cpython-312-pytest-9.1.1.pyc`
+   
+   This violates the checklist item: "Does the diff add any generated or local-only files: __pycache__/, *.pyc, .venv/, venv/, node_modules/, data/*.db, .env, *.log? Any of these is a rejection: ask the builder to remove them from the branch and add them to .gitignore."
+
+2. **Scope violation:** The PR modifies files outside the ticket's scope:
+   - `agents/builder-core.md`
+   - `agents/builder-ui.md`
+   - `agents/reviewer.md`
+   - `agents/tester.md`
+   
+   Issue #1 (T1: Project skeleton) lists only these files to be touched: `app/main.py`, `app/db.py`, `app/classify.py`, `app/rules.py`, and `tests/`. The PR author stated "Anything outside the ticket I had to touch: none," which is incorrect.
+
+3. **Incorrect removal of checklist item:** The modifications to the agent files remove the section "## Added after PR #15" (which contains the generated files checklist item). This section should remain in the base and is part of the reviewer guidelines.
+
+**Other checks passed:**
+- `pytest` passes (2 tests).
+- No prohibited outbound calls (smtp, sendmail, requests.post, etc.) found in the diff.
+- No real-looking personal data (names, emails, phones) in the feed or tests.
+- No keys, tokens, or passwords in any file.
+- Tests do not need the network.
+- Model is not called at all in this PR (placeholders only), but the rule about calling one at a time is not violated.
+- There is a test for the new behaviour (app startup and config endpoint).
+
+**Verdict:** The PR fails due to the generated files and scope violations. It must be rejected.
+
+I posted a detailed review comment to the PR (https://github.com/SiddhiRohan/triage-desk/pull/15#issuecomment-6115536174) and attempted to change the label from `needs-review` to `changes-requested`. However, the label change commands encountered errors (related to GraphQL deprecation warnings) and may not have taken effect. The comment is recorded, and the reviewer's decision is clear: changes are requested.
+
+Please address the issues by:
+- Removing the generated `__pycache__` directories and `.pyc` files from the branch.
+- Reverting the changes to the agent files (or at least preserving the checklist item).
+- Restricting changes to the files listed in the ticket scope.
+
+Once fixed, re-request review.
+
+session_id: 20261012_001919_14705f

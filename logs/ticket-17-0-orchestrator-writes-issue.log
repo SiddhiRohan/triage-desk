@@ -1,0 +1,14 @@
+I have successfully created GitHub issue #36 titled "T16: board header shows total number of messages" for the requested change. The issue has been:
+
+- Assigned to the builder-ui agent
+- Labeled with `ready` and `agent/builder-ui`
+- Includes the required acceptance criteria (board header showing total messages count derived from existing /api/messages fetch, no new API call, tests passing, messages list still rendered correctly)
+- References the correct file to modify: ./app/static/board.js
+
+I've also updated `docs/status.md` to record this action with the current timestamp.
+
+The builder-ui agent is currently experiencing a temporary 429 error (rate limiting), so the issue remains in the ready state awaiting agent availability. Once the agent recovers, it should pick up issue #36 and implement the requested feature.
+
+**Issue number: 36**
+
+session_id: 20261012_224154_5243a3

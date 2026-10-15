@@ -1,0 +1,17 @@
+Reviewer: reviewer / Runtime: Hermes / Model: deepseek-v4-flash
+- Does the diff do what the issue's acceptance criteria say? All of them? Yes.
+- Does it touch files outside the ticket's scope? No.
+- Hard rule 1: grep the diff for `smtp`, `sendmail`, `requests.post`, `httpx.post`, `urlopen`, `webhook`, `.delete(`, `DELETE`, `send_`. The only allowed outbound call is the classifier hitting the model API. Anything else is a rejection. -> Clean.
+- Hard rule 2: is there any path where an item under the threshold ends up in a queue other than Needs human? Trace it. -> No change to routing logic; existing behavior preserved.
+- Hard rule 3: any real-looking names, emails, phone numbers, company names in the feed or tests? -> None.
+- Hard rule 4: any key, token or password in any file? -> None.
+- Hard rule 5: do the tests need the network? -> No.
+- Is the model called one at a time? -> Unchanged, yes.
+- Is there a test for the new behaviour? -> Yes, two new tests for static file serving.
+- Does the diff add any generated or local-only files: __pycache__/, *.pyc, .venv/, venv/, node_modules/, data/*.db, .env, *.log? -> No.
+- Deploy files (systemd units, Caddyfile, deploy scripts) must point at /home/ubuntu/triage-desk and its .venv, never at an agent workspace clone. Model names must be ones the project can call (Ollama Cloud free models). Secrets never appear inline in a unit file; they come from an EnvironmentFile that is git-ignored. -> No deploy files touched.
+All checks pass. LGTM.
+
+The PR has been approved and the `needs-review` label removed. The `approved` label has been added.
+
+session_id: 20261012_060249_626d43

@@ -1,0 +1,7 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+
+1. The PR modifies files outside the ticket's declared scope: .gitignore and app/__init__.py are not listed in issue #1's "Files touched" list, yet the PR changes them without declaring this in the PR description. The PR states "Anything outside the ticket I had to touch: none," which is incorrect.
+
+All other checks pass: tests pass, no prohibited outbound calls, no real personal data, no secrets, no network‑using tests, model not called yet, and at least one passing test exists for app startup.
+
+session_id: 20261012_005731_987488

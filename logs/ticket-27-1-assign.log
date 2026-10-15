@@ -1,0 +1,17 @@
+Issue #27 has been updated:
+
+- Removed label **ready**
+- Added label **in-progress**
+- Comment added: *Assigning to builder‑core.*
+
+The builder was started with the requested command and has completed the ticket. It created a branch, committed the changes, pushed, and opened a PR.
+
+**Current pull‑request list:**
+
+```
+28	T11: nothing creates the schema on a fresh database	ticket/27-schema-creation	OPEN	2026-10-12T04:54:33Z
+```
+
+The PR (https://github.com/SiddhiRohan/triage-desk/pull/28) is labeled **needs-review** and references “Closes #27”.
+
+session_id: 20261012_045313_2511b0

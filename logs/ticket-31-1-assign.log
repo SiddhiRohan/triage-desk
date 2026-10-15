@@ -1,0 +1,37 @@
+I have completed the requested steps:
+
+1. **Issue #31**:  
+   - Removed `ready` label, added `in-progress` label.  
+   - Added comment: “Assigning to builder-ui”.
+
+2. **Builder-ui agent execution**:  
+   - The builder-ui agent picked up the issue, performed the work (mounted static files, added tests, ensured all tests passed), created branch `ticket/31-board-js-static`, committed, pushed, and opened **PR #32** with the required format and labeling (`needs-review`).  
+   - Output from the agent:  
+     ```
+     I have completed issue #31.
+
+     **Work performed:**
+     1.  **Static File Mount**: Added `app.mount("/static", StaticFiles(directory="app/static"), name="static")` to `app/main.py` so that `/static/board.js` (and other static assets) are served correctly.
+     2.  **Test Coverage**: Updated `tests/test_main.py` with two new tests:
+         *   `test_static_board_js()` verifies `GET /static/board.js` returns 200.
+         *   `test_root_contains_board_js()` ensures the board HTML includes the script tag.
+     3.  **Verification**: Ran the full test suite (`pytest -q`) – all 34 tests pass.
+     4.  **Delivery**: Created branch `ticket/31-board-js-static`, committed the fixes, pushed to origin, and opened PR #32.
+
+     **PR Link**: https://github.com/SiddhiRohan/triage-desk/pull/32  
+     The PR is labeled `needs-review` as requested.
+     ```
+
+3. **PR status**:  
+   - `gh pr list` shows PR #32 open:  
+     ```
+     32	T13: board.js is not served, page stays on Loading config	ticket/31-board-js-static	OPEN	2026-10-12T06:01:19Z
+     ```
+
+4. **Status update**:  
+   - Appended to `docs/status.md`:  
+     `2026-10-12 06:02:18 UTC - Assigned issue #31 to builder-ui; builder completed, PR #32 opened, labeled needs-review.`
+
+All actions are complete. The PR is now awaiting review.
+
+session_id: 20261012_055948_e91dc0

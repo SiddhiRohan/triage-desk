@@ -1,0 +1,16 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+- The PR only modifies tests/test_api.py (added try-except around res.json() in test_api_message_detail).
+- Issue #13 acceptance criteria require:
+  1. Tests assert that messages with confidence below the threshold are placed in Needs human queue.
+  2. Tests confirm no code contains outbound calls (grep for smtp, requests.post, httpx.post, DELETE routes, send).
+  3. Board page lists every message in the correct queue.
+  4. All hard rules from PLAN.md are validated by tests.
+  5. All tests pass (`pytest` returns exit code 0).
+- The current change does not address criteria 1-4; it only adds a minor robustness tweak to an existing API test.
+- No new tests for confidence threshold, outbound calls, board page, or hard rules validation are present.
+
+Therefore the PR does not satisfy the acceptance criteria for the hard rules test suite.
+
+I have added a comment to the PR with the above reasoning and set the label to `changes-requested` (removed `needs-review`).
+
+session_id: 20261012_031158_4918da

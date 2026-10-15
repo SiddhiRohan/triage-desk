@@ -1,0 +1,20 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+
+I re‑reviewed PR #22 after fetching the latest branch and checking the deployment files.
+
+**Findings**
+- The PR adds deployment instructions to `README.md`, which is not listed in issue #14’s “Files touched” and was not declared as out‑of‑scope in the PR body. According to the review checklist, any file outside the issue’s “Files touched” list must be declared in the PR; otherwise it is a rejection.
+- All other checks pass:
+  - `DB_PATH=/home/ubuntu/triage-desk/data/triage.db` appears exactly once in each service file under `[Service]`.
+  - Tests pass (`.venv/bin/pytest -q` → 28 passed).
+  - No prohibited outbound calls (smtp, sendmail, requests.post, etc.) appear in the diff.
+  - No real secrets, keys, or personal data appear in the added files.
+  - No generated or local‑only files (`__pycache__`, `*.pyc`, `.env`, etc.) are added.
+  - The changes satisfy the acceptance criteria for issue #14: FastAPI behind Caddy on port 80, systemd units with `Restart=always` and `WantedBy=multi‑user.target`, feed processor runs on boot, deployment documented in README.
+
+**Verdict**
+The PR must be revised to either declare `README.md` as out‑of‑scope in the PR body or remove the change if it is not intended. Until then, the label remains `changes-requested`.
+
+I have left a comment on the PR with these details. No further action is required from me at this time.
+
+session_id: 20261012_042126_8b92bd

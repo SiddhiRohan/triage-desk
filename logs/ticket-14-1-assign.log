@@ -1,0 +1,16 @@
+The issue was updated and the builder was started.
+
+**Actions performed**
+1. `gh issue edit 14 --remove-label ready --add-label in-progress` – updated labels.  
+2. Comment added to issue #14 assigning it to **@builder-core**.  
+3. Ran the builder with the full workflow; it created branch `ticket/14-deploy-setup`, added the required code, tests, deployment scripts, and opened a PR.  
+4. Queried the PR list.
+
+**Current PR list**
+```
+22	T8: Deploy with Caddy and systemd	ticket/14-deploy-setup	OPEN	2026-10-12T03:55:41Z
+```
+
+The PR for ticket #14 (PR #22) is now open and labeled `needs‑review`.
+
+session_id: 20261012_035442_b0856f

@@ -1,0 +1,19 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+LGTM.
+- Diff addresses acceptance criteria for audit trail and config endpoint (adds tests and fixes DB_PATH for testing).
+- No files outside ticket scope touched (as declared).
+- Hard rule 1: no prohibited outbound calls in diff.
+- Hard rule 2: no change to queue assignment logic; diff does not introduce violation.
+- Hard rule 3: no real-looking names in feed or tests.
+- Hard rule 4: no keys, tokens, or passwords in diff.
+- Hard rule 5: tests do not need network (mocks used).
+- Model called one at a time (unchanged).
+- Test for new behaviour added (tests/test_audit.py).
+- No generated or local-only files added.
+- Tests use tmp_path via conftest fixture, do not touch data/, no DELETE cleanup.
+- app/db.py reads DB_PATH at connection time.
+- pytest passes twice.
+
+Label `approved` has been added and `needs-review` removed for PR #20.
+
+session_id: 20261012_015840_d23619

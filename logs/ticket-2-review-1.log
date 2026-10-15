@@ -1,0 +1,17 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nemotron-3-super
+- PR adds data/feed.json and tests/test_feed.py.
+- Acceptance criteria: exactly 30 messages (test passes), required fields present (test passes), no real personal data (names are invented), rough distribution approximately matches claimed 8/7/6/5/4 (checked via simple keyword classification).
+- Hard rule 1: grep for smtp, sendmail, requests.post, httpx.post, urlopen, webhook, .delete(, DELETE, send_ – none found.
+- Hard rule 2: no classifier yet, so N/A.
+- Hard rule 3: no real-looking names, emails, phone numbers, company names.
+- Hard rule 4: no keys, tokens, passwords.
+- Hard rule 5: tests do not need network.
+- Model called one at a time: N/A.
+- Test for new behaviour: tests/test_feed.py validates feed structure and count.
+- Files touched are within scope (data/feed.json) plus test file declared in scope by PR.
+- pytest passes (3/3).
+All checks pass.
+
+Approved PR #16. Label approved set, needs-review removed.
+
+session_id: 20261012_011956_bf64fc
