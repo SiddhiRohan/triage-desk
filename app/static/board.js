@@ -16,7 +16,10 @@ async function loadMessages() {
         const messages = await res.json();
         messagesCount = messages.length;
         
-        // Initialize counts for each queue
+        // Priority weight for sorting: high=3, normal=2, low=1
+        const priorityWeight = { high: 3, normal: 2, low: 1 };
+        
+        // Initialize counts and containers for each queue
         const queueNames = ['Support', 'Billing', 'Bug', 'Sales', 'General', 'Needs human'];
         const counts = {};
         queueNames.forEach(name => { counts[name] = 0; });
@@ -29,36 +32,61 @@ async function loadMessages() {
             'General': document.querySelector('[data-queue="General"] .cards'),
             'Needs human': document.querySelector('[data-queue="Needs human"] .cards')
         };
-
-        messages.forEach(msg => {
+        
+        // Group messages by queue, preserving original index for stable sort
+        const queueMessages = {};
+        queueNames.forEach(name => { queueMessages[name] = []; });
+        messages.forEach((msg, index) => {
             const q = msg.queue || 'General';
-            // Increment count for this queue
-            counts[q] = (counts[q] || 0) + 1;
+            if (!queueMessages[q]) {
+                queueMessages[q] = [];
+            }
+            queueMessages[q].push({ msg, index });
+        });
+        
+        // For each queue, sort by priority weight descending, then by original index ascending
+        queueNames.forEach(queueName => {
+            const msgs = queueMessages[queueName];
+            if (!msgs) return;
             
-            const container = queues[q] || queues['General'];
+            msgs.sort((a, b) => {
+                const weightA = priorityWeight[a.msg.priority] || 0;
+                const weightB = priorityWeight[b.msg.priority] || 0;
+                if (weightA !== weightB) {
+                    return weightB - weightA; // descending weight
+                }
+                return a.index - b.index; // stable: original order
+            });
             
-            const card = document.createElement('div');
-            card.className = 'card';
-            if (q === 'Needs human') card.classList.add('needs-human');
+            // Update count
+            counts[queueName] = msgs.length;
             
-            const priorityClass = `priority-${msg.priority.toLowerCase()}`;
-            const badgePriorityClass = `badge-priority-${msg.priority.toLowerCase()}`;
-            
-            // Add priority class to card for left border color
-            card.classList.add(priorityClass);
-            
-            card.innerHTML = `
-                ${q === 'Needs human' ? '<span class="badge badge-human">HUMAN REQUIRED</span>' : ''}
-                <h3>${msg.subject}</h3>
-                <div class="meta">
-                    <span class="badge">${msg.category}</span>
-                    <span class="${badgePriorityClass}">${msg.priority}</span>
-                    <span>Conf: ${msg.confidence.toFixed(2)}</span>
-                </div>
-            `;
-            
-            card.onclick = () => showDetail(msg.id);
-            container.appendChild(card);
+            const container = queues[queueName];
+            msgs.forEach(({ msg }) => {
+                const q = msg.queue || 'General';
+                const card = document.createElement('div');
+                card.className = 'card';
+                if (q === 'Needs human') card.classList.add('needs-human');
+                
+                const priorityClass = `priority-${msg.priority.toLowerCase()}`;
+                const badgePriorityClass = `badge-priority-${msg.priority.toLowerCase()}`;
+                
+                // Add priority class to card for left border color
+                card.classList.add(priorityClass);
+                
+                card.innerHTML = `
+                    ${q === 'Needs human' ? '<span class="badge badge-human">HUMAN REQUIRED</span>' : ''}
+                    <h3>${msg.subject}</h3>
+                    <div class="meta">
+                        <span class="badge">${msg.category}</span>
+                        <span class="${badgePriorityClass}">${msg.priority}</span>
+                        <span>Conf: ${msg.confidence.toFixed(2)}</span>
+                    </div>
+                `;
+                
+                card.onclick = () => showDetail(msg.id);
+                container.appendChild(card);
+            });
         });
         
         // Update queue headers with counts
