@@ -12,8 +12,8 @@ page on top, Caddy in front, on an AWS VM that Terraform built.
 
 The agents wrote the code. I wrote the plan (`docs/PLAN.md`) and the role files (`agents/`),
 ran the loop, filed the bugs I found when I started the service, rejected pull requests when the
-reviewer let something through, and merged. Twenty tickets, nineteen merged PRs, one ticket left
-open on purpose for the follow-up call. Every commit under
+reviewer let something through, and merged. Twenty tickets and nineteen merged PRs by the Monday
+deadline; two more on Thursday, before the follow-up call (section 3). Every commit under
 `app/`, `scripts/`, `tests/`, `data/` and `deployment/` is authored by an agent; mine are the
 merge commits and the files under `agents/`, `docs/`, `infra/`, `logs/` and `tools/`.
 `git log --format='%an %s'` shows it.
@@ -94,11 +94,13 @@ the ones I filed.
 | T12 classifier endpoint by env | #29 | #30 | builder-core | 1 | needed to move the classifier off Ollama. OpenRouter's cap hit mid-review; finished on NVIDIA |
 | T13 board.js not served | #31 | #32 | builder-ui | 1 | found in the browser: `/static/board.js` 404, page stuck on "Loading config..." |
 | T14 model null on rules fallback | #33 | #34 | builder-core | 1 | Monday, on NVIDIA: three minutes from assign to approved. The builder committed on a leftover branch from T12 instead of a fresh one; diff was clean, rule added |
+| T15 TRIAGE_MODEL default | #35 | #49 | builder-core | 4 | filed Monday, left open, run Thursday morning before the follow-up call. The reviewer approved a fix that changed `classify.py` but not the identical default in `main.py`, with a PR body calling a failing test pre-existing (a clean clone said 40 passed); I rejected. The fix round broke README.md, a duplicated section and a dropped heading; I rejected again. Third push clean, reviewer approved |
 | T16 header shows total count | #36 | #37 | builder-ui | 1 | the orchestrator wrote this issue from a one-line request; clean |
 | T18 live intake endpoint | #38 | #39 | builder-core | 1 | the orchestrator killed the builder after seven silent minutes and marked the issue blocked; re-run directly, builder had also posted test rows into the live database; two rules added |
 | T19 queue headers show counts | #40 | #41 | builder-ui | 1 | clean |
 | T20 color cards by priority | #42 | #43 | builder-ui | 1 | approved and merged; the colors never rendered (CSS selector with a space, class on the card itself). Found by opening the page |
 | T21 fix the T20 selector | #44 | #45 | builder-ui | 1 | the recorded ticket; clean |
+| T22 sort cards by priority | #46 | #47 | builder-ui | 1 | Thursday, a dry run for the follow-up call: clean, assign to approved in minutes |
 
 
 Issue numbers skip where the orchestrator made duplicates on Sunday and closed them (#3, #5,
@@ -190,6 +192,13 @@ builders to set their identity). One commit of mine, a role-file change, went ou
 agent's name before I noticed. I rewrote that one commit's author, force-pushed, resynced the
 agents' clones, and `run_ticket.sh` now pins my identity every time it starts. The reviewer also
 checks PRs out in a scratch clone now instead of mine.
+
+**Thursday, the same two patterns on a two-line ticket.** Running T15 before the follow-up call: the
+reviewer approved a change to `classify.py` that left the identical default in `main.py`, and the
+builder's PR body called a failing test "a pre-existing false positive in a dependency" when a clean
+clone passed all 40. I rejected; the fix broke README.md; I rejected again; the third push was right.
+Sunday's lesson held: the reviewer reads what is in the diff, not what should be, and a builder's
+account of its own test run is a claim to check, not a result.
 
 **The reviewer misreported its own model twice.** It wrote `deepseek-v4-flash` in a PR header
 while its config said nemotron. All model names in this document come from config files, the
