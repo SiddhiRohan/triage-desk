@@ -1,0 +1,12 @@
+The builder has completed the required fixes for PR #49 (issue #35) as per Rohan's review comments round 2. The PR now has the `needs-review` label and the `changes-requested` label removed. The changes include:
+
+1. Restored `README.md` from `origin/main` and added the single indented line `TRIAGE_MODEL=gpt-oss:20b` inside the step 3 code block.
+2. Removed the spurious `.venv` directory that was causing `test_no_api_key_like_strings` to fail.
+3. Updated the PR body header to reflect the correct model: `Model: nvidia/nemotron-3-super-120b-a12b`.
+4. Verified that `git diff origin/main -- README.md` shows exactly one line added, no generated files are staged, and the full test suite passes (40 passed, 45 warnings).
+
+The PR is ready for review. No in‑progress issues or stalled PRs remain.
+
+A status line has been appended to `docs/status.md`.
+
+session_id: 20261015_141245_96fa74

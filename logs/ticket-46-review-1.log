@@ -1,0 +1,15 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nvidia/nemotron-3-super-120b-a12b
+- Diff matches issue #46 acceptance criteria: high priority before normal/low, equal priority stable, no new API calls, no changes to card content/detail/queue headers.
+- Only file changed: app/static/board.js (within scope).
+- Hard rule 1: no prohibited keywords (smtp, sendmail, requests.post, httpx.post, urlopen, webhook, .delete(, DELETE, send_) found in diff.
+- Hard rule 2: sorting does not affect routing; items under threshold remain in Needs human (no change).
+- Hard rule 3: no real personal data introduced.
+- Hard rule 4: no secrets introduced.
+- Hard rule 5: tests pass offline (40 passed).
+- No generated or local-only files added (__pycache__, *.pyc, .venv, etc.).
+- Model call frequency unchanged (still one at a time).
+- No new test for frontend sorting (non-blocking suggestion: consider adding a test for sorting behavior).
+LGTM.
+PR #47 approved. Label `approved` set, `needs-review` removed.
+
+session_id: 20261015_062142_e50840

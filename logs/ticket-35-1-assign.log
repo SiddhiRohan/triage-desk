@@ -1,0 +1,10 @@
+Assigned issue #35 to builder-core (removed `ready`, added `in-progress`, commented).  
+Started the builder agent; it completed successfully, opening PR #49:  
+
+**PR #49** – “T15: TRIAGE_MODEL default should be a model we can call” (branch `ticket/35-default-model`), labeled `needs-review`.  
+
+Updated `docs/status.md` with a timestamped entry noting the assignment, builder completion, and PR opening.  
+
+All requested steps are done. Let me know if you need anything else.
+
+session_id: 20261015_131849_6d8660

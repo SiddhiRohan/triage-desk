@@ -1,0 +1,20 @@
+Reviewer: reviewer / Runtime: Hermes / Model: nvidia/nemotron-3-super-120b-a12b
+
+I reviewed PR #49 (`ticket/35-default-model`) which changes the default `TRIAGE_MODEL` from `gpt-4o` to `gpt-oss:20b`.
+
+**What I checked:**
+- The diff matches the issue #35 acceptance criteria: default model set to `gpt-oss:20b`, existing test assertions updated, README reflects the new default.
+- No prohibited outbound calls (grep for `smtp`, `sendmail`, `requests.post`, `httpx.post`, `urlopen`, `webhook`, `.delete(`, `DELETE`, `send_` shows none in the changed files.
+- Hard rule 2: classification logic unchanged, so items under the confidence threshold still go only to “Needs human”.
+- Hard rule 3: no real‑looking personal data introduced.
+- Hard rule 4: no secrets, keys, or tokens added.
+- Hard rule 5: tests remain offline (they use mocks).
+- The model is still called one at a time (unchanged).
+- Tests for the new behaviour exist (updated assertions in `tests/test_api.py` and `tests/test_classify.py`).
+- No generated or local‑only files appear in the diff.
+- The test suite passes twice (40 passed, 45 warnings both runs) – no flakiness.
+- Scope is limited to the files mentioned in the issue (`app/classify.py`, `tests/test_classify.py`, `README.md`) plus the necessary test update in `tests/test_api.py` that asserts the default model name.
+
+All checks pass. I have commented on the PR with the LGTM statement and applied the `approved` label (removing `needs-review`).
+
+session_id: 20261015_132515_919ced
