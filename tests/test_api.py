@@ -49,7 +49,7 @@ def test_intake_valid_request():
             "reason": "test reason",
             "queue": "Support",
             "source": "llm",
-            "model": "gpt-4o",
+            "model": "gpt-oss:20b",
             "decided_at": "2023-01-01T00:00:00Z"
         }
         # Create a test client inside the patch to ensure the mock is used
@@ -74,7 +74,7 @@ def test_intake_valid_request():
         assert data["reason"] == "test reason"
         assert data["queue"] == "Support"
         assert data["source"] == "llm"
-        assert data["model"] == "gpt-4o"
+        assert data["model"] == "gpt-oss:20b"
         assert data["decided_at"] == "2023-01-01T00:00:00Z"
 
 def test_intake_missing_subject():

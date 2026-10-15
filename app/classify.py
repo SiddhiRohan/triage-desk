@@ -6,7 +6,7 @@ from app.db import get_db_connection
 from app.rules import rule_based_classify
 
 # Configuration from environment variables
-TRIAGE_MODEL = os.getenv("TRIAGE_MODEL", "gpt-4o")
+TRIAGE_MODEL = os.getenv("TRIAGE_MODEL", "gpt-oss:20b")
 CONFIDENCE_THRESHOLD = float(os.getenv("CONFIDENCE_THRESHOLD", "0.70"))
 
 def build_prompt(message_text: str):

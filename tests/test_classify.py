@@ -119,7 +119,7 @@ def test_classify_llm_source_sets_model():
             row = conn.execute("SELECT source, model FROM decisions WHERE message_id = ?", ("msg-llm",)).fetchone()
             assert row is not None
             assert row["source"] == "llm"
-            assert row["model"] == "gpt-4o"  # default model
+            assert row["model"] == "gpt-oss:20b"  # default model
 
 
 def test_classify_rules_source_sets_model_null():
