@@ -25,6 +25,7 @@ To deploy the Triage Desk application to a Linux server:
     ```
     TRIAGE_API_URL=https://ollama.com/v1/chat/completions
     TRIAGE_API_KEY=your_actual_api_key_here
+    TRIAGE_MODEL=gpt-oss:20b
     ```
     The classifier will use `TRIAGE_API_KEY` for authentication, falling back to `OLLAMA_API_KEY` if set. The `TRIAGE_API_URL` defaults to the Ollama OpenAI-compatible endpoint.
 4.  **Run the deployment script**:

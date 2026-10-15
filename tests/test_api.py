@@ -1,24 +1,29 @@
 import pytest
 from fastapi.testclient import TestClient
-from app.main import app
+import app.main as app_module
 from app.db import init_db
 from unittest.mock import patch, MagicMock
 import httpx
+import importlib
 
 # Create a test client that will be used in tests that don't need to mock
-client = TestClient(app)
+client = TestClient(app_module.app)
 
 @pytest.fixture(autouse=True)
 def setup_db():
     init_db()
 
-def test_api_config():
+def test_api_config(monkeypatch):
+    # Ensure TRIAGE_MODEL is not set to test the default
+    monkeypatch.delenv("TRIAGE_MODEL", raising=False)
+    importlib.reload(app_module)
+    app = app_module.app
+    client = TestClient(app)
     res = client.get("/api/config")
     assert res.status_code == 200
     data = res.json()
     assert "confidence_threshold" in data
-    assert "model_name" in data
-
+    assert data["model_name"] == "gpt-oss:20b"
 def test_api_messages_list():
     # Note: depends on data/triage.db having data.
     # In a real CI, we would seed a test DB.
@@ -49,7 +54,7 @@ def test_intake_valid_request():
             "reason": "test reason",
             "queue": "Support",
             "source": "llm",
-            "model": "gpt-4o",
+            "model": "gpt-oss:20b",
             "decided_at": "2023-01-01T00:00:00Z"
         }
         # Create a test client inside the patch to ensure the mock is used
@@ -74,7 +79,7 @@ def test_intake_valid_request():
         assert data["reason"] == "test reason"
         assert data["queue"] == "Support"
         assert data["source"] == "llm"
-        assert data["model"] == "gpt-4o"
+        assert data["model"] == "gpt-oss:20b"
         assert data["decided_at"] == "2023-01-01T00:00:00Z"
 
 def test_intake_missing_subject():
