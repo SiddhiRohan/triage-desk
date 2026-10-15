@@ -35,12 +35,12 @@ TRIAGE_MODEL=gpt-oss:20b
     This script will:
     - Install Caddy as a reverse proxy.
     - Set up the `triage.service` systemd unit to run the FastAPI app via Uvicorn.
-    - Set up the `triage-feed.service` to process the synthetic feed on boot.
-    - Configure Caddy to route traffic from port 80 to the app on port 8000.
-
-5.  **Configuration**: Other environment variables are set in the systemd unit files.
-
-## Live Intake Endpoint
+3.  **Configure Environment Variables**: Create a file at `/home/ubuntu/triage-desk/.env` with the following content (TRIAGE_MODEL defaults to gpt-oss:20b if not set):
+```
+TRIAGE_API_URL=https://ollama.com/v1/chat/completions
+TRIAGE_API_KEY=your_actual_api_key_here
+TRIAGE_MODEL=gpt-oss:20b
+```
 
 The application provides a POST endpoint to submit a live message for triage.
 

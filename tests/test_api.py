@@ -12,12 +12,14 @@ client = TestClient(app)
 def setup_db():
     init_db()
 
-def test_api_config():
+def test_api_config(monkeypatch):
+    # Ensure TRIAGE_MODEL is not set to test the default
+    monkeypatch.delenv("TRIAGE_MODEL", raising=False)
     res = client.get("/api/config")
     assert res.status_code == 200
     data = res.json()
     assert "confidence_threshold" in data
-    assert "model_name" in data
+    assert data["model_name"] == "gpt-oss:20b"
 
 def test_api_messages_list():
     # Note: depends on data/triage.db having data.
